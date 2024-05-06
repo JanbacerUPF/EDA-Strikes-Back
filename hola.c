@@ -24,5 +24,6 @@ typedef struct Enemy {
 } Enemy;
 
 int main() {
+    // hola
     return 0;
 }
