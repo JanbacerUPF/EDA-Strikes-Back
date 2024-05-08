@@ -1,5 +1,6 @@
-#include <stdio.h>
-#include "structures.c"
+#include "combat.c"
+#include "struct.c"
+
 #define NEW_GAME 1
 #define EXIT 2
 

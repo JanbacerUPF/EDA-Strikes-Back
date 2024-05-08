@@ -5,13 +5,16 @@
 #include <string.h>
 // We include the same libraries as EDA I but it is possible that we will not use all of them
 
-#define Temp_Mod 0
-#define Dir_Atk 1
+#define TEMP_MOD 0  //Temporary modifier
+#define DIR_ATK 1   //Direct attack
+#define MAX_LENGTH 500 //Max length of the strings
+#define MAX_NAME 50 //Max length of the names
+
 /*Skill: name and description, type (temporary modifier or direct attack), 
 duration in turns (if temporary), and modifiers for atk/def/hp*/
 typedef struct Skills{
-    char name;
-    char description;
+    char name[MAX_NAME];
+    char description[MAX_LENGTH];
     int type; //Defint the type as an integer that can be 0 or 1(easier implementation)
     int duration;
     int hp_mod;
@@ -21,7 +24,7 @@ typedef struct Skills{
 
 //Character: name, hp/atk/def points, and an array of 4 skills.
 typedef struct Character{
-    char name;
+    char name[MAX_NAME];
     int hp;
     int atk;
     int def;
@@ -30,25 +33,24 @@ typedef struct Character{
 
 //Enemy: name, atk/hp/def.
 typedef struct Enemy{
-    char name;
+    char name[MAX_NAME];
     int hp;
     int atk;
     int def;
-    Skills character_skills[4];
 }Enemy;
 
 /*Option: response text, narrative text (before battling the enemies), 
 enemies (can be reused from other scenarios), narrative text (after battling the enemies)*/
 typedef struct Option{
-    char response;
-    char previous_narrative;
+    char response[MAX_LENGTH];
+    char previous_narrative[MAX_LENGTH];
     Enemy enemies[3]; //3 enemies since it is the maximum type of enemies
     char after_narrative;
 }Option;
 
 //Decision: question text, options, number of options
 typedef struct Decision{
-    char question_text;
+    char question_text[MAX_LENGTH];
     int options_number;
     Option options[];
 }Decision;
@@ -57,5 +59,8 @@ typedef struct Decision{
 typedef struct Scenario{
     char name;
     char description;
-    //Decision list
+    Decision decisions[];
 }Scenario;
+
+Character character_creation();
+void show_skills(Skills skills[], int size);
