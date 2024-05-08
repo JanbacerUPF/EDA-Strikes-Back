@@ -53,8 +53,8 @@ typedef struct Decision{
 
 //Scenario: name and description, and decision (or decision list)
 typedef struct Scenario{
-    char name;
-    char description;
+    char name[MAX_NAME];
+    char description[MAX_LENGTH];
     Decision decisions[];
 }Scenario;
 
