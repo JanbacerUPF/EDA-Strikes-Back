@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #define TEMP_MOD 0  //Temporary modifier
 #define DIR_ATK 1   //Direct attack
 #define MAX_LENGTH 500 //Max length of the strings
