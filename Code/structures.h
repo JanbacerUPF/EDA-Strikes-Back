@@ -1,6 +1,12 @@
+#ifndef _STRUCTURES_H_
+#define _STRUCTURES_H_
+
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 #include <stdbool.h>
+#include <assert.h>
+#include <string.h>
+
 #define TEMP_MOD 0  //Temporary modifier
 #define DIR_ATK 1   //Direct attack
 #define MAX_LENGTH 500 //Max length of the strings
@@ -59,4 +65,6 @@ typedef struct Scenario{
 }Scenario;
 
 Character character_creation();
+
+#endif 
 
