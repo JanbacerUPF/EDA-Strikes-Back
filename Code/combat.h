@@ -3,7 +3,8 @@
 
 #include "structures.h"
 
-bool is_finished(Character* player, Enemy* enemies);
+bool is_finished(Character* player, Enemy* enemies[]);
 
+void combats(Character* player, Enemy enemies[], int number_enemies);
 
 #endif 

@@ -1,4 +1,5 @@
 #include "structures.h"
+#include "combat.h"
 //Function to print the possible skills to choose from
 void show_skills(Skills skills[], int size){
     for(int i = 0; i<size; i++){
@@ -29,6 +30,8 @@ Character character_creation(){
     for(int i = 0; i<4; i++){
         printf("%s ",player.character_skills[i].name);
     }
+    Enemy enemies[3];
+    combats(&player,enemies,3);
 
 
     return player;

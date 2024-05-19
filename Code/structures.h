@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <assert.h>
 #include <string.h>
+#include <time.h>
+
 
 #define TEMP_MOD 0  //Temporary modifier
 #define DIR_ATK 1   //Direct attack
