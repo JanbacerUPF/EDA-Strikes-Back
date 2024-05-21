@@ -1,5 +1,8 @@
 #include "combat.h"
 #define TURNS 12
+#define PLAYER 0
+#define ENEMY 1
+
 /*QUEUE FUNCTIONS, TURNS ASSIGMENTS, COMBAT LOGIC*/
 
 //CODE FOR QUEUES
@@ -69,12 +72,18 @@ void combats(Character* player, Enemy enemies[], int number_enemies){
     //Random initialization
     srand(time(NULL));
     //We will use number_enemies + 1 as the player also will have a turn
-    int fighters = 2; //PLAYER AND ENEMY = 2 (TOTAL OF CHARACTERS IN THE COMBAT)
     Queue turns = init_queue(TURNS);
     //Enqueuing all the turns
+    int player_percentage = 50+player->speed;
     for(int i = 0; i<TURNS; i++){
-        int r = rand() % fighters;
-        enqueue(&turns,r,TURNS);
+        //Generate random number bearing in mind the player's chance to attack
+        int r = rand() % 100;
+        if(r<player_percentage){
+            enqueue(&turns,PLAYER,TURNS);
+        }
+        else{
+            enqueue(&turns,ENEMY,TURNS);
+        }
     }
     //PLACEHOLDER COMBAT SIM
     for(int i = 0; i<TURNS;i++){

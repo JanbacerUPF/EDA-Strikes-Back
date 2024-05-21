@@ -1,5 +1,4 @@
-#include "combat.c"
-#include "structures.c"
+#include "combat.h"
 
 #define NEW_GAME 1
 #define EXIT 2
@@ -7,6 +6,8 @@
 
 void new_game(){
     Character player = character_creation();
+    Enemy enemies[3];
+    combats(&player,enemies,3);
 }
 
 int menu(){

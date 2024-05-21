@@ -8,6 +8,8 @@
 #include <string.h>
 #include <time.h>
 
+#include "cJSON.h"
+
 
 #define TEMP_MOD 0  //Temporary modifier
 #define DIR_ATK 1   //Direct attack
@@ -19,21 +21,12 @@ duration in turns (if temporary), and modifiers for atk/def/hp*/
 typedef struct Skills{
     char name[MAX_NAME];
     char description[MAX_LENGTH];
-    int type; //Defint the type as an integer that can be 0 or 1(easier implementation)
+    int type; //Define the type as an integer that can be 0 or 1(easier implementation)
     int duration;
     int hp_mod;
     int atk_mod;
     int def_mod;
 }Skills;
-
-//Character: name, hp/atk/def points, and an array of 4 skills.
-typedef struct Character{
-    char name[MAX_NAME];
-    int hp;
-    int atk;
-    int def;
-    Skills character_skills[4];
-}Character;
 
 //Enemy: name, atk/hp/def.
 typedef struct Enemy{
@@ -41,6 +34,7 @@ typedef struct Enemy{
     int hp;
     int atk;
     int def;
+    Skills skills[4];
 }Enemy;
 
 /*Option: response text, narrative text (before battling the enemies), 
@@ -48,7 +42,7 @@ enemies (can be reused from other scenarios), narrative text (after battling the
 typedef struct Option{
     char response[MAX_LENGTH];
     char previous_narrative[MAX_LENGTH];
-    Enemy enemies[3]; //3 enemies since it is the maximum type of enemies
+    Enemy enemies[3]; //3 enemies since it is the maximum number of enemies
     char after_narrative;
 }Option;
 
@@ -63,8 +57,21 @@ typedef struct Decision{
 typedef struct Scenario{
     char name[MAX_NAME];
     char description[MAX_LENGTH];
+    Scenario *Next;
+    Scenario *Previous;
     Decision decisions[];
 }Scenario;
+
+//Character: name, hp/atk/def points, and an array of 4 skills.
+typedef struct Character{
+    char name[MAX_NAME];
+    int hp;
+    int atk;
+    int def;
+    int speed;
+    Skills character_skills[4];
+    Scenario current_scenario;
+}Character;
 
 Character character_creation();
 
