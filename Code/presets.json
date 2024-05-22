@@ -1,0 +1,115 @@
+{
+    "skills": [
+        {
+            "name": "Berserk Strike",
+            "description": "Enter a state of rage, delivering a powerful but reckless attack.",
+            "type": 0,
+            "duration": 1,
+            "hp_mod": 0,
+            "atk_mod": 0,
+            "def_mod": 0
+        },
+        {
+            "name": "Iron Defense",
+            "description": "Harden your defences, reducing incoming damage.",
+            "type": 1,
+            "duration": 3,
+            "hp_mod": 10,
+            "atk_mod": 0,
+            "def_mod": 20
+        },
+        {
+            "name": "Fireball",
+            "description": "A powerful fire attack that scorches the enemy.",
+            "type": 1,
+            "duration": 5,
+            "hp_mod": -20,
+            "atk_mod": 10,
+            "def_mod": 0
+        },
+        {
+            "name": "Fireball",
+            "description": "A powerful fire attack that scorches the enemy.",
+            "type": 1,
+            "duration": 5,
+            "hp_mod": -20,
+            "atk_mod": 10,
+            "def_mod": 0
+        },
+        {
+            "name": "Fireball",
+            "description": "A powerful fire attack that scorches the enemy.",
+            "type": 1,
+            "duration": 5,
+            "hp_mod": -20,
+            "atk_mod": 10,
+            "def_mod": 0
+        },
+        {
+            "name": "Fireball",
+            "description": "A powerful fire attack that scorches the enemy.",
+            "type": 1,
+            "duration": 5,
+            "hp_mod": -20,
+            "atk_mod": 10,
+            "def_mod": 0
+        },
+        {
+            "name": "Fireball",
+            "description": "A powerful fire attack that scorches the enemy.",
+            "type": 1,
+            "duration": 5,
+            "hp_mod": -20,
+            "atk_mod": 10,
+            "def_mod": 0
+        },
+        {
+            "name": "Fireball",
+            "description": "A powerful fire attack that scorches the enemy.",
+            "type": 1,
+            "duration": 5,
+            "hp_mod": -20,
+            "atk_mod": 10,
+            "def_mod": 0
+        },
+        {
+            "name": "Fireball",
+            "description": "A powerful fire attack that scorches the enemy.",
+            "type": 1,
+            "duration": 5,
+            "hp_mod": -20,
+            "atk_mod": 10,
+            "def_mod": 0
+        },
+        {
+            "name": "Fireball",
+            "description": "A powerful fire attack that scorches the enemy.",
+            "type": 1,
+            "duration": 5,
+            "hp_mod": -20,
+            "atk_mod": 10,
+            "def_mod": 0
+        },
+        {
+            "name": "Fireball",
+            "description": "A powerful fire attack that scorches the enemy.",
+            "type": 1,
+            "duration": 5,
+            "hp_mod": -20,
+            "atk_mod": 10,
+            "def_mod": 0
+        },
+        {
+            "name": "Fireball",
+            "description": "A powerful fire attack that scorches the enemy.",
+            "type": 1,
+            "duration": 5,
+            "hp_mod": -20,
+            "atk_mod": 10,
+            "def_mod": 0
+        }
+    ],
+    "enemies":[
+
+    ]
+}
