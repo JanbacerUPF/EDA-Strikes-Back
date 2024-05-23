@@ -74,7 +74,7 @@ void combats(Character* player, Enemy enemies[], int number_enemies){
     //We will use number_enemies + 1 as the player also will have a turn
     Queue turns = init_queue(TURNS);
     //Enqueuing all the turns
-    int player_percentage = 50+player->speed;
+    int player_percentage = 50+player->vel;
     for(int i = 0; i<TURNS; i++){
         //Generate random number bearing in mind the player's chance to attack
         int r = rand() % 100;

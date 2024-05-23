@@ -1,0 +1,177 @@
+{
+    "scenarios":[
+        {
+            "name": "Temple",
+            "description": "this is the description of the temple",
+            "decisions":[
+                {
+                    "question":"This is the question text",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        },
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        }
+                    ]
+                },
+                {
+                    "question":"This is the question text",
+                    "number": 2,
+                    "options":[
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        },
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "name": "Caca",
+            "description": "this is the description of the temple",
+            "decisions":[
+                {
+                    "question":"This is the question text",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        },
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        }
+                    ]
+                },
+                {
+                    "question":"This is the question text",
+                    "number": 2,
+                    "options":[
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        },
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "name": "Pedo",
+            "description": "this is the description of the temple",
+            "decisions":[
+                {
+                    "question":"This is the question text",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        },
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        }
+                    ]
+                },
+                {
+                    "question":"This is the question text",
+                    "number": 2,
+                    "options":[
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        },
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "name": "Pis",
+            "description": "this is the description of the temple",
+            "decisions":[
+                {
+                    "question":"This is the question text",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        },
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        }
+                    ]
+                },
+                {
+                    "question":"This is the question text",
+                    "number": 2,
+                    "options":[
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        },
+                        {
+                            "response": "This is the response text",
+                            "previous": "This is a previous narrative",
+                            "enemies": [0,0,0],
+                            "after": "This is the after narrative"
+                        }
+                    ]
+                }
+            ]
+
+        }
+        
+    ]
+}

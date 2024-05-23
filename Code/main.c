@@ -1,13 +1,28 @@
 #include "combat.h"
+//#include "structures.h"
+
 
 #define NEW_GAME 1
 #define EXIT 2
 
 
 void new_game(){
-    Character player = character_creation();
+    Session current_game;
+    load_config(&current_game);
+    current_game.current_scenario=current_game.first_Scenario;
+    current_game.player = character_creation(&current_game);
+    printf("\n ENEMIES \n");
+    for(int i=0; i<MAX_ENEMIES; i++){
+        printf("Enemy number %d: %s\n", i, current_game.enemies[i].name);
+    }
+
+    
+
+    
+    
+
     Enemy enemies[3];
-    combats(&player,enemies,3);
+    combats(&current_game.player,enemies,3);
 }
 
 int menu(){
