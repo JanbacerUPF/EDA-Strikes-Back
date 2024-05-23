@@ -19,17 +19,32 @@
 #define PLAYER 0
 #define ENEMY 1
 
-#define MAX_LENGTH 1024 //Max length of the strings
+#define MAX_LENGTH 4096 //Max length of the strings
 #define MAX_NAME 64 //Max length of the names
 #define MAX_SKILLS 11
-#define MAX_ENEMIES 9
+#define MAX_ENEMIES 8
 #define PLAYER_SKILLS 4
 #define MAX_SCENARIOS 5
 
 
+// Define ANSI color codes using #define
+#define RED     "\033[0;31m"
+#define GREEN   "\033[0;32m"
+#define YELLOW  "\033[0;33m"
+#define BLUE    "\033[0;34m"
+#define MAGENTA "\033[0;35m"
+#define CYAN    "\033[0;36m"
+#define BOLD    "\033[0;1m"
+#define UNDERLINE "\033[0;4m"
+#define INVERT  "\033[0;7m"
+#define RESET   "\033[0m"  // Reset color
+
+
+
+
 /*Skill: name and description, type (temporary modifier or direct attack), 
 duration in turns (if temporary), and modifiers for atk/def/hp*/
-typedef struct Skill{
+typedef struct Skills{
     char name[MAX_NAME];
     char description[MAX_LENGTH];
     char effect[MAX_LENGTH];
@@ -37,7 +52,7 @@ typedef struct Skill{
     float hp_mod;
     float atk_mod;
     float def_mod;
-}Skill;
+}Skills;
 
 //Enemy: name, atk/hp/def.
 typedef struct Enemy{
@@ -46,8 +61,9 @@ typedef struct Enemy{
     int atk;
     int def;
     int turns;
-    Skill skills[PLAYER_SKILLS];
+    Skills skills[PLAYER_SKILLS];
     float multiplier_skill;
+    int max_hp;
 }Enemy;
 
 /*Option: response text, narrative text (before battling the enemies), 
@@ -57,6 +73,7 @@ typedef struct Option{
     char previous_narrative[MAX_LENGTH];
     char after_narrative[MAX_LENGTH];
     Enemy* enemies;
+    int en_num;
 }Option;
 
 //Decision: question text, options, number of options
@@ -70,9 +87,11 @@ typedef struct Decision{
 typedef struct Scenario{
     char name[MAX_NAME];
     char description[MAX_LENGTH];
+    int completed;
     struct Scenario *Next;
     struct Scenario *Previous;
     Decision* decisions;
+    int dec_num;
 }Scenario;
 
 //Character: name, hp/atk/def points, and an array of 4 skills.
@@ -83,13 +102,15 @@ typedef struct Character{
     int def;
     int vel;
     int soul;
-    Skill character_skills[PLAYER_SKILLS];
+    Skills character_skills[PLAYER_SKILLS];
 }Character;
+
+
 
 //Structures for the dictionary of skills
 typedef struct HashNode {
     char key[MAX_NAME];
-    Skill skill;
+    Skills skill;
     struct HashNode* next;
 } HashNode;
 
@@ -108,14 +129,11 @@ typedef struct Session {
 
 unsigned int hash(char *str);
 
-
-
-
 HashTable* create_table_skills();
 
-void insert_skill(HashTable* hashTable, Skill skill);
+void insert_skill(HashTable* hashTable, Skills skill);
 
-Skill* find_skill(HashTable* hashTable, char* name);
+Skills* find_skill(HashTable* hashTable, char* name);
 
 void delete_skill(HashTable* hashTable, char* name);
 
@@ -127,7 +145,7 @@ void enemy_loader(Enemy enemies_array[], HashTable* hash_skills);
 
 void scene_loader(Session* session);
 
-void show_skills(Skill skills[],int size);
+void show_skills(Skills skills[],int size);
 
 void load_config(Session* session);
 
