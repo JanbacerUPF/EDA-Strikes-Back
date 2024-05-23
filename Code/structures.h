@@ -1,40 +1,33 @@
 #ifndef _STRUCTURES_H_
 #define _STRUCTURES_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <assert.h>
-#include <string.h>
-#include <time.h>
-
 #include "cJSON.h"
+#include "common.h"
 
-
-#define TEMP_MOD 0  //Temporary modifier
-#define DIR_ATK 1   //Direct attack
-#define MAX_LENGTH 500 //Max length of the strings
-#define MAX_NAME 50 //Max length of the names
 
 /*Skill: name and description, type (temporary modifier or direct attack), 
 duration in turns (if temporary), and modifiers for atk/def/hp*/
 typedef struct Skills{
     char name[MAX_NAME];
     char description[MAX_LENGTH];
-    int type; //Define the type as an integer that can be 0 or 1(easier implementation)
-    int duration;
-    int hp_mod;
-    int atk_mod;
-    int def_mod;
+    char effect[MAX_LENGTH];
+    int type; //Type 0: no soul. Type 1: soul
+    float hp_mod;
+    float atk_mod;
+    float def_mod;
 }Skills;
 
 //Enemy: name, atk/hp/def.
 typedef struct Enemy{
     char name[MAX_NAME];
-    int hp;
-    int atk;
-    int def;
-    Skills skills[4];
+    char description[MAX_LENGTH];
+    char appearance[MAX_LENGTH];
+    float hp;
+    float atk;
+    float def;
+    int turns;
+    Skills skills[NUM_SKILLS];
+    float multiplier_skill;
 }Enemy;
 
 /*Option: response text, narrative text (before battling the enemies), 
@@ -42,7 +35,7 @@ enemies (can be reused from other scenarios), narrative text (after battling the
 typedef struct Option{
     char response[MAX_LENGTH];
     char previous_narrative[MAX_LENGTH];
-    Enemy enemies[3]; //3 enemies since it is the maximum number of enemies
+    Enemy enemies[MAX_NUM_ENEMIES]; //3 enemies since it is the maximum number of enemies
     char after_narrative;
 }Option;
 
@@ -57,19 +50,20 @@ typedef struct Decision{
 typedef struct Scenario{
     char name[MAX_NAME];
     char description[MAX_LENGTH];
-    Scenario *Next;
-    Scenario *Previous;
-    Decision decisions[];
+    struct Scenario *Next;
+    struct Scenario *Previous;
+    Decision *decisions[];
 }Scenario;
 
 //Character: name, hp/atk/def points, and an array of 4 skills.
 typedef struct Character{
     char name[MAX_NAME];
-    int hp;
-    int atk;
-    int def;
-    int speed;
-    Skills character_skills[4];
+    float hp;
+    float atk;
+    float def;
+    float vel;
+    float soul;
+    Skills character_skills[NUM_SKILLS];
     Scenario current_scenario;
 }Character;
 

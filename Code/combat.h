@@ -2,6 +2,8 @@
 #define _COMBAT_H_
 
 #include "structures.h"
+#include "common.h"
+#include "utils.h"
 
 bool is_finished(Character* player, Enemy* enemies[]);
 

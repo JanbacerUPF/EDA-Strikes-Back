@@ -1,7 +1,7 @@
 #include "structures.h"
 
 
-#define MAX_SKILLS 2
+#define MAX_SKILLS 2 // max_skills 2?
 //Load skills from the Jason
 void skill_loader(Skills skillsArray[]){
     FILE *fp = fopen("presets.json", "r");
@@ -44,8 +44,8 @@ void skill_loader(Skills skillsArray[]){
 
         cJSON* name = cJSON_GetObjectItemCaseSensitive(skill, "name");
         cJSON* description = cJSON_GetObjectItemCaseSensitive(skill, "description");
+        cJSON* effect = cJSON_GetObjectItemCaseSensitive(skill, "effect");
         cJSON* type = cJSON_GetObjectItemCaseSensitive(skill, "type");
-        cJSON* duration = cJSON_GetObjectItemCaseSensitive(skill, "duration");
         cJSON* hp_mod = cJSON_GetObjectItemCaseSensitive(skill, "hp_mod");
         cJSON* atk_mod = cJSON_GetObjectItemCaseSensitive(skill, "atk_mod");
         cJSON* def_mod = cJSON_GetObjectItemCaseSensitive(skill, "def_mod");
@@ -60,12 +60,13 @@ void skill_loader(Skills skillsArray[]){
             skillsArray[i].description[MAX_LENGTH - 1] = '\0';
         }
 
-        if (cJSON_IsNumber(type)) {
-            skillsArray[i].type = type->valueint;
+        if (cJSON_IsString(effect) && effect->valuestring != NULL) {
+            strncpy(skillsArray[i].effect, effect->valuestring, MAX_LENGTH - 1);
+            skillsArray[i].effect[MAX_LENGTH - 1] = '\0';
         }
 
-        if (cJSON_IsNumber(duration)) {
-            skillsArray[i].duration = duration->valueint;
+        if (cJSON_IsNumber(type)) {
+            skillsArray[i].type = type->valueint;
         }
 
         if (cJSON_IsNumber(hp_mod)) {

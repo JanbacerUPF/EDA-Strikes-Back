@@ -1,8 +1,4 @@
-
-#include "combat.h"
-
-#define NEW_GAME 1
-#define EXIT 2
+#include "main.h"
 
 
 void new_game(){
@@ -11,30 +7,41 @@ void new_game(){
     combats(&player,enemies,3);
 }
 
-int menu(){
-    printf("___  ___                 \n");
-    printf("|  \\/  |                 \n");
-    printf("| .  . | ___ _ __  _   _ \n");
-    printf("| |\\/| |/ _ \\ '_ \\| | | |\n");
-    printf("| |  | |  __/ | | | |_| |\n");
-    printf("\\_|  |_|\\___|_| |_|\\__,_|\n");
-    printf("                         \n");
-    printf("                         \n");
+int menu() {
     int option;
-    while(option!=EXIT){
+
+    do {
+        printf("\n");
+        printf("___  ___                 \n");
+        printf("|  \\/  |                 \n");
+        printf("| .  . | ___ _ __  _   _ \n");
+        printf("| |\\/| |/ _ \\ '_ \\| | | |\n");
+        printf("| |  | |  __/ | | | |_| |\n");
+        printf("\\_|  |_|\\___|_| |_|\\__,_|\n");
+        printf("                         \n");
+        printf("                         \n");
         printf("SELECT AN OPTION\n");
         printf("1. New Game\n");
         printf("2. Exit Game\n");
-        scanf("%d",&option);
-        if(option==NEW_GAME){
-            new_game();
-        }
-    }
+        option = read_int();
 
+        if (option == NEW_GAME) {
+            printf("You have selected new game.\n");
+            //new_game();
+        } else if (option != EXIT) {
+            printf("That is not an option.\n");
+            printf("Please, try it again.\n");
+        }
+    } while (option != EXIT);
+
+    return 0;
 }
 
 
 int main(){
+    printf("Welcome to Lost Souls!\n\n");
+
     menu();
+
     return 0;
 }

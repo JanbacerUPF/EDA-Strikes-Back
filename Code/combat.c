@@ -1,13 +1,12 @@
 #include "combat.h"
-#define TURNS 12
-#define PLAYER 0
-#define ENEMY 1
+
+
 
 /*QUEUE FUNCTIONS, TURNS ASSIGMENTS, COMBAT LOGIC*/
 
 //CODE FOR QUEUES
 typedef struct Queue{
-    int* array;
+    int *array;
     int *head;
     int *tail;
     int elements;
@@ -66,27 +65,27 @@ void dequeue(Queue *q, int N) {
 void free_queue(Queue *q) {
     free(q->array);
 }
-//END OF THE CODE FOR QUEUES´
+//END OF THE CODE FOR QUEUES
 
 void combats(Character* player, Enemy enemies[], int number_enemies){
     //Random initialization
     srand(time(NULL));
     //We will use number_enemies + 1 as the player also will have a turn
-    Queue turns = init_queue(TURNS);
+    Queue turns = init_queue(enemies->turns);
     //Enqueuing all the turns
-    int player_percentage = 50+player->speed;
-    for(int i = 0; i<TURNS; i++){
+    int player_percentage = 50+player->vel;
+    for(int i = 0; i<enemies->turns; i++){
         //Generate random number bearing in mind the player's chance to attack
         int r = rand() % 100;
         if(r<player_percentage){
-            enqueue(&turns,PLAYER,TURNS);
+            enqueue(&turns,PLAYER,enemies->turns);
         }
         else{
-            enqueue(&turns,ENEMY,TURNS);
+            enqueue(&turns,ENEMY,enemies->turns);
         }
     }
     //PLACEHOLDER COMBAT SIM
-    for(int i = 0; i<TURNS;i++){
+    for(int i = 0; i<enemies->turns;i++){
         int turn = first(turns);
         printf("TURN\n");
         if(turn==0){
@@ -95,10 +94,9 @@ void combats(Character* player, Enemy enemies[], int number_enemies){
         else{
             printf("Enemy's turn\n",turn);
         }
-        dequeue(&turns,TURNS);
+        dequeue(&turns,enemies->turns);
     }
 }
-
 
 
 bool is_finished(Character* player, Enemy* enemies[]) {
