@@ -331,8 +331,7 @@ void enemy_loader(Enemy enemies_array[], HashTable* hash_skills) {
                 }
             }
         }
-        printf("ENEMY FLOAT: %f", current_enemy.multiplier_skill);
-
+        current_enemy.max_hp=current_enemy.hp;
         enemies_array[i] = current_enemy;
     }
 
@@ -516,6 +515,7 @@ void scene_loader(Session* session) {
         current_scenario->Previous = previousScenario;
 
         int dec_size = cJSON_GetArraySize(decisions);
+        current_scenario->dec_num=dec_size;
         current_scenario->decisions = (Decision*)malloc(dec_size * sizeof(Decision));
         if (current_scenario->decisions == NULL) {
             printf("Memory allocation failed\n");
@@ -529,9 +529,6 @@ void scene_loader(Session* session) {
 
             cJSON* question = cJSON_GetObjectItemCaseSensitive(decision, "question");
             cJSON* number_options = cJSON_GetObjectItemCaseSensitive(decision, "n_options");
-            if (number_options == NULL) {
-                number_options = cJSON_GetObjectItemCaseSensitive(decision, "number"); // handle "number" field
-            }
             cJSON* options = cJSON_GetObjectItemCaseSensitive(decision, "options");
 
             if (question == NULL || number_options == NULL || options == NULL || !cJSON_IsArray(options)) continue;
@@ -566,6 +563,7 @@ void scene_loader(Session* session) {
                 current_option.after_narrative[MAX_LENGTH - 1] = '\0';
 
                 int en_size = cJSON_GetArraySize(enemies);
+                current_option.en_num=en_size;
                 current_option.enemies = (Enemy*)malloc(en_size * sizeof(Enemy));
                 if (current_option.enemies == NULL) {
                     printf("Memory allocation failed\n");
@@ -580,11 +578,15 @@ void scene_loader(Session* session) {
                 }
 
                 current_decision.options[k] = current_option;
+                
             }
 
             current_scenario->decisions[j] = current_decision;
+            
+            
         }
-
+        current_scenario->completed=0;
+        printf("\nAAAAAAAAAA\n");
         if (previousScenario == NULL) {
             firstScenario = current_scenario;
         } else {
@@ -622,24 +624,12 @@ Character character_creation(Session* session){
     Character player;
     player.vel=0;
     printf("Enter the character's name: ");
-    scanf("%s", player.name); // Set the input as the character's name
-    printf("\n");
-    /*for(int i = 0; i<PLAYER_SKILLS; i++){
-        printf("Choose the player's skills: \n");
-        for (int j = 0; j < MAX_SKILLS; j++) {
-            HashNode* node = session->hash_skills->table[j];
-            Skills skill = node->skill;
-            printf("%d: %s=>%s\n",j+1,skill.name,skill.description);
-        }
-        int option;
-        scanf("%d", &option);
-        while(option>=MAX_SKILLS||option<=0){
-            printf("Please enter a valid option!");
-            scanf("%d", &option);
-            }
-            player.character_skills[i]= session->hash_skills->table[option-1]->skill;
+    //scanf("%s", player.name); // Set the input as the character's name
+    scanf("%[^\n]s",player.name);
+    while((getchar()) != '\n');
 
-        }*/
+    printf("\n");
+
     bool selected[MAX_SKILLS] = { false };  // Array to keep track of selected skills
 
     for (int i = 0; i < PLAYER_SKILLS; i++) {
@@ -666,6 +656,7 @@ Character character_creation(Session* session){
         }
 
         int option;
+        printf("Enter a valid option: ");
         scanf("%d", &option);
 
         while (option < 1 || option > count || selected[option - 1]) {
@@ -684,3 +675,4 @@ Character character_creation(Session* session){
     
     return player;
 }
+

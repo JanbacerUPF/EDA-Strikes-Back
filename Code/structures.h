@@ -13,12 +13,26 @@
 
 #define TEMP_MOD 0  //Temporary modifier
 #define DIR_ATK 1   //Direct attack
-#define MAX_LENGTH 1024 //Max length of the strings
+#define MAX_LENGTH 4096 //Max length of the texts
 #define MAX_NAME 64 //Max length of the names
-#define MAX_SKILLS 11
-#define MAX_ENEMIES 9
-#define PLAYER_SKILLS 4
-#define MAX_SCENARIOS 5
+#define MAX_SKILLS 11 //Max number of skills created
+#define MAX_ENEMIES 8 //Max number of enemies created
+#define PLAYER_SKILLS 4 //Max number of skills the player can have
+#define MAX_SCENARIOS 5 //MAx number of scenarios created
+
+// Define ANSI color codes using #define
+#define RED     "\033[0;31m"
+#define GREEN   "\033[0;32m"
+#define YELLOW  "\033[0;33m"
+#define BLUE    "\033[0;34m"
+#define MAGENTA "\033[0;35m"
+#define CYAN    "\033[0;36m"
+#define BOLD    "\033[0;1m"
+#define UNDERLINE "\033[0;4m"
+#define INVERT  "\033[0;7m"
+#define RESET   "\033[0m"  // Reset color
+
+
 
 
 /*Skill: name and description, type (temporary modifier or direct attack), 
@@ -42,6 +56,7 @@ typedef struct Enemy{
     int turns;
     Skills skills[PLAYER_SKILLS];
     float multiplier_skill;
+    int max_hp;
 }Enemy;
 
 /*Option: response text, narrative text (before battling the enemies), 
@@ -51,6 +66,7 @@ typedef struct Option{
     char previous_narrative[MAX_LENGTH];
     char after_narrative[MAX_LENGTH];
     Enemy* enemies;
+    int en_num;
 }Option;
 
 //Decision: question text, options, number of options
@@ -64,9 +80,11 @@ typedef struct Decision{
 typedef struct Scenario{
     char name[MAX_NAME];
     char description[MAX_LENGTH];
+    int completed;
     struct Scenario *Next;
     struct Scenario *Previous;
     Decision* decisions;
+    int dec_num;
 }Scenario;
 
 //Character: name, hp/atk/def points, and an array of 4 skills.

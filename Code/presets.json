@@ -124,17 +124,6 @@
             "multiplier_skill": 0.5
         },
         {
-            "name": "Cave Minion",
-            "description": "Small, nimble creatures that lurk in the shadows of the cave, using sharp claws and speed to attack intruders.",
-            "appearance": "Hunched, with glowing eyes and dark, leathery skin.",
-            "hp": 75,
-            "atk": 50,
-            "def": 25,
-            "turns": 10,
-            "skills": ["Berserk Strike","Iron Defense","Regeneration","Precision Strike"],
-            "multiplier_skill": 0.5
-        },
-        {
             "name": "Temple Minion",
             "description": "Guardians of the temple, trained to protect its secrets and treasures from intruders.",
             "appearance": "Agile, monk-like figures with simple robes and swift, precise movements.",
