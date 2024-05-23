@@ -1,4 +1,5 @@
 #include "main.h"
+#include "structures.h"
 
 
 void new_game(){
@@ -24,27 +25,54 @@ void new_game(){
 int menu() {
     int option;
 
+    printf("\n");
+    printf("___  ___                 \n");
+    printf("|  \\/  |                 \n");
+    printf("| .  . | ___ _ __  _   _ \n");
+    printf("| |\\/| |/ _ \\ '_ \\| | | |\n");
+    printf("| |  | |  __/ | | | |_| |\n");
+    printf("\\_|  |_|\\___|_| |_|\\__,_|\n");
+    printf("                         \n");
+    printf("                         \n");
+    printf("SELECT AN OPTION\n");
+    printf("1. New Game\n");
+    printf("2. Resume Game\n");
+    printf("3. Save Game\n");
+    printf("4. Load Game\n");
+    printf("5. Exit Game\n");
+
     do {
-        printf("\n");
-        printf("___  ___                 \n");
-        printf("|  \\/  |                 \n");
-        printf("| .  . | ___ _ __  _   _ \n");
-        printf("| |\\/| |/ _ \\ '_ \\| | | |\n");
-        printf("| |  | |  __/ | | | |_| |\n");
-        printf("\\_|  |_|\\___|_| |_|\\__,_|\n");
-        printf("                         \n");
-        printf("                         \n");
-        printf("SELECT AN OPTION\n");
-        printf("1. New Game\n");
-        printf("2. Exit Game\n");
         option = read_int();
 
-        if (option == NEW_GAME) {
-            printf("You have selected new game.\n");
-            new_game();
-        } else if (option != EXIT) {
-            printf("That is not an option.\n");
-            printf("Please, try it again.\n\n");
+        switch (option) {
+            case NEW_GAME:
+                printf("Starting new game...\n");
+                new_game();
+                break;
+
+            case RESUME_GAME:
+                printf("Resuming game...\n");
+                // Add the logic to resume game here
+                break;
+
+            case SAVE_GAME:
+                printf("Saving game...\n");
+                // Add the logic to save game here
+                break;
+
+            case LOAD_GAME:
+                printf("Loading game...\n");
+                // Add the logic to load game here
+                break;
+
+            case EXIT:
+                printf("Exiting...\n");
+                break;
+
+            default:
+                printf("That is not an option.\n");
+                printf("Please, try it again.\n\n");
+                break;
         }
     } while (option != EXIT);
 

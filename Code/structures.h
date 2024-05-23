@@ -2,7 +2,29 @@
 #define _STRUCTURES_H_
 
 #include "cJSON.h"
-#include "common.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <assert.h>
+#include <string.h>
+#include <time.h>
+
+#define NEW_GAME 1
+#define RESUME_GAME 2
+#define SAVE_GAME 3
+#define LOAD_GAME 4
+#define EXIT 5
+
+#define PLAYER 0
+#define ENEMY 1
+
+#define MAX_LENGTH 1024 //Max length of the strings
+#define MAX_NAME 64 //Max length of the names
+#define MAX_SKILLS 11
+#define MAX_ENEMIES 9
+#define PLAYER_SKILLS 4
+#define MAX_SCENARIOS 5
 
 
 /*Skill: name and description, type (temporary modifier or direct attack), 
