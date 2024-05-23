@@ -14,9 +14,11 @@
 #define PLAYER 0
 #define ENEMY 1
 
-#define MAX_LENGTH 500 //Max length of the strings
-#define MAX_NAME 50 //Max length of the names
-#define NUM_SKILLS 4
-#define MAX_NUM_ENEMIES 3
+#define MAX_LENGTH 1024 //Max length of the strings
+#define MAX_NAME 64 //Max length of the names
+#define MAX_SKILLS 11
+#define MAX_ENEMIES 9
+#define PLAYER_SKILLS 4
+#define MAX_SCENARIOS 5
 
 #endif

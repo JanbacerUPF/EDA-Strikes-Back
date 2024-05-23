@@ -11,7 +11,7 @@ typedef struct Skills{
     char name[MAX_NAME];
     char description[MAX_LENGTH];
     char effect[MAX_LENGTH];
-    int type; //Type 0: no soul. Type 1: soul
+    int type; //Define the type as an integer that can be 0 or 1(easier implementation)
     float hp_mod;
     float atk_mod;
     float def_mod;
@@ -20,13 +20,11 @@ typedef struct Skills{
 //Enemy: name, atk/hp/def.
 typedef struct Enemy{
     char name[MAX_NAME];
-    char description[MAX_LENGTH];
-    char appearance[MAX_LENGTH];
-    float hp;
-    float atk;
-    float def;
+    int hp;
+    int atk;
+    int def;
     int turns;
-    Skills skills[NUM_SKILLS];
+    Skills skills[PLAYER_SKILLS];
     float multiplier_skill;
 }Enemy;
 
@@ -35,15 +33,15 @@ enemies (can be reused from other scenarios), narrative text (after battling the
 typedef struct Option{
     char response[MAX_LENGTH];
     char previous_narrative[MAX_LENGTH];
-    Enemy enemies[MAX_NUM_ENEMIES]; //3 enemies since it is the maximum number of enemies
-    char after_narrative;
+    char after_narrative[MAX_LENGTH];
+    Enemy* enemies;
 }Option;
 
 //Decision: question text, options, number of options
 typedef struct Decision{
     char question_text[MAX_LENGTH];
     int options_number;
-    Option options[];
+    Option* options;
 }Decision;
 
 //Scenario: name and description, and decision (or decision list)
@@ -52,21 +50,57 @@ typedef struct Scenario{
     char description[MAX_LENGTH];
     struct Scenario *Next;
     struct Scenario *Previous;
-    Decision *decisions[];
+    Decision* decisions;
 }Scenario;
 
 //Character: name, hp/atk/def points, and an array of 4 skills.
 typedef struct Character{
     char name[MAX_NAME];
-    float hp;
-    float atk;
-    float def;
-    float vel;
-    float soul;
-    Skills character_skills[NUM_SKILLS];
-    Scenario current_scenario;
+    int hp;
+    int atk;
+    int def;
+    int vel;
+    int soul;
+    Skills character_skills[PLAYER_SKILLS];
 }Character;
 
-Character character_creation();
+
+
+//Structures for the dictionary of skills
+typedef struct HashNode {
+    char key[MAX_NAME];
+    Skills skill;
+    struct HashNode* next;
+} HashNode;
+
+typedef struct HashTable {
+    HashNode* table[MAX_SKILLS];
+    int size;
+} HashTable;
+
+typedef struct Session {
+    HashTable* hash_skills;
+    Character player;
+    Scenario current_scenario;
+    Scenario first_Scenario;
+    Enemy enemies[MAX_ENEMIES];
+} Session;
+
+
+Character character_creation(Session* session);
+
+
+HashTable* create_table_skills();
+
+
+void skill_loader(HashTable* hashTable);
+
+void load_config(Session* session);
+
+Skills* find_skill(HashTable* hashTable, char* name);
+
+
+
 
 #endif 
+
