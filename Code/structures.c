@@ -18,7 +18,7 @@ HashTable* create_table_skills() {
     return hashTable;
 }
 
-void insert_skill(HashTable* hashTable, Skills skill) {
+void insert_skill(HashTable* hashTable, Skill skill) {
     unsigned int index = hash(skill.name);
     HashNode* newNode = (HashNode*)malloc(sizeof(HashNode));
     strcpy(newNode->key, skill.name);
@@ -28,7 +28,7 @@ void insert_skill(HashTable* hashTable, Skills skill) {
     hashTable->size++;
 }
 
-Skills* find_skill(HashTable* hashTable, char* name) {
+Skill* find_skill(HashTable* hashTable, char* name) {
     unsigned int index = hash(name);
     HashNode* node = hashTable->table[index];
     while (node != NULL) {
@@ -117,7 +117,7 @@ void skill_loader(HashTable* hashTable){
         cJSON* hp_mod = cJSON_GetObjectItemCaseSensitive(skill, "hp_mod");
         cJSON* atk_mod = cJSON_GetObjectItemCaseSensitive(skill, "atk_mod");
         cJSON* def_mod = cJSON_GetObjectItemCaseSensitive(skill, "def_mod");
-        Skills currentskill;
+        Skill currentskill;
         if (cJSON_IsString(name) && name->valuestring != NULL) {
             strncpy(currentskill.name, name->valuestring, MAX_NAME - 1);
             currentskill.name[MAX_NAME - 1] = '\0';
@@ -232,9 +232,6 @@ void skill_loader(HashTable* hashTable){
     cJSON_Delete(json);
 }*/
 
-
-
-
 void enemy_loader(Enemy enemies_array[], HashTable* hash_skills) {
     FILE *fp = fopen("presets.json", "r");
 
@@ -321,7 +318,7 @@ void enemy_loader(Enemy enemies_array[], HashTable* hash_skills) {
             for (int j = 0; j < skill_count && j < MAX_SKILLS; j++) {
                 cJSON* skill = cJSON_GetArrayItem(enemy_skill_array, j);
                 if (cJSON_IsString(skill) && skill->valuestring != NULL) {
-                    Skills* findSkill = find_skill(hash_skills, skill->valuestring);
+                    Skill* findSkill = find_skill(hash_skills, skill->valuestring);
                     if (findSkill != NULL) {
                         current_enemy.skills[j] = *findSkill;
                     }
@@ -602,7 +599,7 @@ void scene_loader(Session* session) {
 
 
 //Function to print the possible skills to choose from
-void show_skills(Skills skills[],int size){
+void show_skills(Skill skills[],int size){
     for(int i = 0; i<size; i++){
         printf("%d: %s=>%s\n",i+1,skills[i].name,skills[i].description);
     }
@@ -631,11 +628,10 @@ Character character_creation(Session* session){
             Skills skill = node->skill;
             printf("%d: %s=>%s\n",j+1,skill.name,skill.description);
         }
-        int option;
-        scanf("%d", &option);
+        int option = read_int();
         while(option>=MAX_SKILLS||option<=0){
             printf("Please enter a valid option!");
-            scanf("%d", &option);
+            option = read_int();
             }
             player.character_skills[i]= session->hash_skills->table[option-1]->skill;
 
@@ -653,7 +649,7 @@ Character character_creation(Session* session){
             while (node != NULL) {
                 if (!selected[count]) { // Only display non-selected skills
                     skill_map[count] = node;
-                    printf("%d: %s => %s\n", count + 1, node->skill.name, node->skill.description);
+                    printf("%d: %s\n\tDescription: %s\n\tEffect: %s\n\t", count + 1, node->skill.name, node->skill.description, node->skill.effect);
                 }
                 count++;
                 node = node->next;
@@ -665,12 +661,11 @@ Character character_creation(Session* session){
             break;
         }
 
-        int option;
-        scanf("%d", &option);
+        int option = read_int();
 
         while (option < 1 || option > count || selected[option - 1]) {
             printf("Please enter a valid option: ");
-            scanf("%d", &option);
+            option = read_int();
         }
 
         selected[option - 1] = true; // Mark the selected skill as chosen

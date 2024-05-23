@@ -41,10 +41,10 @@ int menu() {
 
         if (option == NEW_GAME) {
             printf("You have selected new game.\n");
-            //new_game();
+            new_game();
         } else if (option != EXIT) {
             printf("That is not an option.\n");
-            printf("Please, try it again.\n");
+            printf("Please, try it again.\n\n");
         }
     } while (option != EXIT);
 

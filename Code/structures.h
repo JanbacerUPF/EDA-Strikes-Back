@@ -7,7 +7,7 @@
 
 /*Skill: name and description, type (temporary modifier or direct attack), 
 duration in turns (if temporary), and modifiers for atk/def/hp*/
-typedef struct Skills{
+typedef struct Skill{
     char name[MAX_NAME];
     char description[MAX_LENGTH];
     char effect[MAX_LENGTH];
@@ -15,7 +15,7 @@ typedef struct Skills{
     float hp_mod;
     float atk_mod;
     float def_mod;
-}Skills;
+}Skill;
 
 //Enemy: name, atk/hp/def.
 typedef struct Enemy{
@@ -24,7 +24,7 @@ typedef struct Enemy{
     int atk;
     int def;
     int turns;
-    Skills skills[PLAYER_SKILLS];
+    Skill skills[PLAYER_SKILLS];
     float multiplier_skill;
 }Enemy;
 
@@ -61,15 +61,13 @@ typedef struct Character{
     int def;
     int vel;
     int soul;
-    Skills character_skills[PLAYER_SKILLS];
+    Skill character_skills[PLAYER_SKILLS];
 }Character;
-
-
 
 //Structures for the dictionary of skills
 typedef struct HashNode {
     char key[MAX_NAME];
-    Skills skill;
+    Skill skill;
     struct HashNode* next;
 } HashNode;
 
@@ -86,18 +84,32 @@ typedef struct Session {
     Enemy enemies[MAX_ENEMIES];
 } Session;
 
+unsigned int hash(char *str);
 
-Character character_creation(Session* session);
+
 
 
 HashTable* create_table_skills();
 
+void insert_skill(HashTable* hashTable, Skill skill);
+
+Skill* find_skill(HashTable* hashTable, char* name);
+
+void delete_skill(HashTable* hashTable, char* name);
+
+void free_table(HashTable* hashTable);
 
 void skill_loader(HashTable* hashTable);
 
+void enemy_loader(Enemy enemies_array[], HashTable* hash_skills);
+
+void scene_loader(Session* session);
+
+void show_skills(Skill skills[],int size);
+
 void load_config(Session* session);
 
-Skills* find_skill(HashTable* hashTable, char* name);
+Character character_creation(Session* session);
 
 
 
