@@ -38,7 +38,6 @@ void printEnteringScenario(char *scenario) {
 void open_scenario(Scenario* scenario){
     printf("\n\n\n");
     printEnteringScenario(scenario->name);
-    printf("COMPLETED NUM: %d", scenario->completed);
     if(scenario->completed==0){
          printf("%s\n",scenario->description);
         for(int i = 0; i<scenario->dec_num;i++){

@@ -586,7 +586,6 @@ void scene_loader(Session* session) {
             
         }
         current_scenario->completed=0;
-        printf("\nAAAAAAAAAA\n");
         if (previousScenario == NULL) {
             firstScenario = current_scenario;
         } else {
@@ -595,7 +594,7 @@ void scene_loader(Session* session) {
         previousScenario = current_scenario;
     }
 
-    session->first_Scenario = *firstScenario;
+    session->first_Scenario = firstScenario;
 
     cJSON_Delete(json);
 }

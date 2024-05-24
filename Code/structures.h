@@ -115,8 +115,8 @@ typedef struct HashTable {
 typedef struct Session {
     HashTable* hash_skills;
     Character player;
-    Scenario current_scenario;
-    Scenario first_Scenario;
+    Scenario *current_scenario;
+    Scenario *first_Scenario;
     Enemy enemies[MAX_ENEMIES];
 } Session;
 

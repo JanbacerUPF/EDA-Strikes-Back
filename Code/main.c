@@ -12,16 +12,15 @@ void new_game(){
     load_config(&current_game);
     current_game.current_scenario=current_game.first_Scenario;
     current_game.player = character_creation(&current_game);
-    while(current_game.current_scenario.Next!=NULL){
-        open_scenario(&current_game.current_scenario);
-        printf("Updated COMPLETED NUM: %d\n", current_game.current_scenario.completed); // To verify the change
+    while(current_game.current_scenario->Next!=NULL){
+        open_scenario(current_game.current_scenario);
         int option;
         bool valid_options[2]={false};
-        if(current_game.current_scenario.Next!=NULL){
+        if(current_game.current_scenario->Next!=NULL){
             valid_options[0]=true;
             printf("1. Continue your journey and go to the next scenario\n");
         }
-        if(current_game.current_scenario.Previous!=NULL){
+        if(current_game.current_scenario->Previous!=NULL){
             valid_options[1]=true;
             printf("2. Go back to the previous scenario\n");
         }
@@ -34,13 +33,13 @@ void new_game(){
             option--;
         }
         if(option==0){
-            current_game.current_scenario=*current_game.current_scenario.Next;
+            current_game.current_scenario=current_game.current_scenario->Next;
         }
         else if(option==1){
-            current_game.current_scenario=*current_game.current_scenario.Previous;
+            current_game.current_scenario=current_game.current_scenario->Previous;
         }
     }
-    open_scenario(&current_game.current_scenario);
+    open_scenario(current_game.current_scenario);
     printf("\n\n\n THE GAME IS FINISHED\n");
     
 
