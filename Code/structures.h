@@ -7,6 +7,8 @@
 #include <assert.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
+#include <math.h>
 
 #include "cJSON.h"
 
@@ -31,9 +33,6 @@
 #define UNDERLINE "\033[0;4m"
 #define INVERT  "\033[0;7m"
 #define RESET   "\033[0m"  // Reset color
-
-
-
 
 /*Skill: name and description, type (temporary modifier or direct attack), 
 duration in turns (if temporary), and modifiers for atk/def/hp*/
