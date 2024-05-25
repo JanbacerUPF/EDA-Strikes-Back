@@ -301,16 +301,22 @@ int fight(Character* player, Enemy enemy){
         } sleep(1); // Wait between turns, to give time for the player to understand what's happening
 
         if(enemy.hp <= 0){
-            printf("Player Win \n");
+            printf("%s__  __               _       __          \n"
+                   "\\ \\/ /___  __  __   | |     / /___  ____ \n"
+                   " \\  / __ \\/ / / /   | | /| / / __ \\/ __ \\\n"
+                   " / / /_/ / /_/ /    | |/ |/ / /_/ / / / /\n"
+                   "/_/\\____/\\__,_/     |__/|__/\\____/_/ /_/ %s\n", INVERT, RESET);
             player->def = base_def; // Reset DEF each fight
             return 0; // player win
         }else if (player->hp <= 0){
-            printf("Player Loss \n");
-            player->def = base_def; // Reset DEF each fight
-            return 1; // player loss
+            break;
         }
     }
-    printf("Player Loss \n");
+printf("%S __  __               __               __ \n"
+       "\\ \\/ /___  __  __   / /   ____  _____/ /_\n"
+       " \\  / __ \\/ / / /  / /   / __ \\/ ___/ __/\n"
+       " / / /_/ / /_/ /  / /___/ /_/ (__  ) /_  \n"
+       "/_/\\____/\\__,_/  /_____\\____/____/\\__/ %s\n", INVERT, RESET);
     player->def = base_def; // Reset DEF each fight
     return 1; // player loss
 }
