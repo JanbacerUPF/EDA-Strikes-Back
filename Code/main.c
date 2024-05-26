@@ -11,9 +11,9 @@ void new_game(){
     Session current_game;
     load_config(&current_game);
     current_game.current_scenario=current_game.first_Scenario;
-    current_game.player = character_creation(&current_game);
+    current_game.player = story_character_creation(&current_game);
     while(current_game.current_scenario->Next!=NULL){
-        open_scenario(current_game.current_scenario);
+        open_scenario(current_game.current_scenario, &current_game);
         int option;
         bool valid_options[2]={false};
         if(current_game.current_scenario->Next!=NULL){
@@ -39,7 +39,7 @@ void new_game(){
             current_game.current_scenario=current_game.current_scenario->Previous;
         }
     }
-    open_scenario(current_game.current_scenario);
+    open_scenario(current_game.current_scenario, &current_game);
     printf("\n\n\n THE GAME IS FINISHED\n");
     
 
@@ -64,11 +64,13 @@ int menu(){
         printf("*  2. Exit Game                 *\n");
         printf("*                               *\n");
         printf("*********************************\n");
+        // Example: Blue and Underline
         printf("Enter your choice: ");
         scanf("%d",&option);
         while((getchar()) != '\n');
         if(option==NEW_GAME){
             printf("Starting a New Game...\n\n\n");
+            //printf(CLEAR_SCREEN);
             new_game();
         }
     }

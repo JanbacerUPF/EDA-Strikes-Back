@@ -1,4 +1,7 @@
 #include "structures.h"
 
+void open_scenario(Scenario* scenario, Session* session);
 
-void open_scenario(Scenario* scenario);
+Intro introduction();
+
+void printWrapped(const char *str);

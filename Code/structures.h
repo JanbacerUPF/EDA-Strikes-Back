@@ -29,10 +29,12 @@
 #define BLUE    "\033[0;34m"
 #define MAGENTA "\033[0;35m"
 #define CYAN    "\033[0;36m"
-#define BOLD    "\033[0;1m"
-#define UNDERLINE "\033[0;4m"
-#define INVERT  "\033[0;7m"
+#define BOLD    "\033[1m"       // Changed to "\033[1m" as "\033[0;1m" might not be standard
+#define UNDERLINE "\033[4m"     // Changed to "\033[4m" as "\033[0;4m" might not be standard
+#define INVERT  "\033[7m"       // "\033[0;7m" should work but "\033[7m" is more standard
 #define RESET   "\033[0m"  // Reset color
+#define CLEAR_SCREEN "\033[2J\033[H"
+
 
 /*Skill: name and description, type (temporary modifier or direct attack), 
 duration in turns (if temporary), and modifiers for atk/def/hp*/
@@ -103,6 +105,7 @@ typedef struct Character{
 typedef struct HashNode {
     char key[MAX_NAME];
     Skills skill;
+    int uses;
     struct HashNode* next;
 } HashNode;
 
@@ -119,8 +122,17 @@ typedef struct Session {
     Enemy enemies[MAX_ENEMIES];
 } Session;
 
+typedef struct Intro{
+    char prev_name[MAX_LENGTH];
+    char after_name[MAX_LENGTH];
+    char prophecy[MAX_LENGTH];
+    char last[MAX_LENGTH];
+}Intro;
+
 
 Character character_creation(Session* session);
+
+Character story_character_creation(Session* session);
 
 
 HashTable* create_table_skills();
@@ -131,6 +143,8 @@ void skill_loader(HashTable* hashTable);
 void load_config(Session* session);
 
 Skills* find_skill(HashTable* hashTable, char* name);
+
+HashNode* find_node(HashTable* hashTable, char* name);
 
 
 

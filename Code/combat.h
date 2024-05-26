@@ -53,11 +53,11 @@ void fill_fight_queue(Queue* q, int velocity, int turns);
 // Function to show player and enemy stats
 void view_stats(Character* player, Enemy* enemy);
 
-void player_turn(Character* player, Enemy* enemy);
+void player_turn(Character* player, Enemy* enemy, Session* session);
 
 void enemy_turn(Character* player, Enemy* enemy);
 
 // FIGHT FUNCTION ------------------------------------------------------------------
-int fight(Character* player, Enemy enemy); // OUTPUT: Returns 0 -> player won, 1 -> player lost
+int fight(Character* player, Enemy enemy, Session* session); // OUTPUT: Returns 0 -> player won, 1 -> player lost
 
 #endif // COMBAT_H
