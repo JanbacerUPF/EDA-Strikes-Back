@@ -1,7 +1,6 @@
 #include "main.h"
 #include "structures.h"
 
-
 void new_game(){
     Session current_game;
     load_config(&current_game);
@@ -37,10 +36,57 @@ void new_game(){
     }
     open_scenario(&current_game.current_scenario);
     printf("\n\n\n THE GAME IS FINISHED\n");
-    
-
 }
 
+// Swap function
+void swap(Scenario** a, Scenario** b) {
+    Scenario* temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Partition function for Quick Sort
+int partition(Scenario* scenarios[], int low, int high) {
+    char* pivot = scenarios[high]->name;
+    int i = (low - 1);
+    for (int j = low; j < high; j++) {
+        if (strcmp(scenarios[j]->name, pivot) < 0) {
+            i++;
+            swap(&scenarios[i], &scenarios[j]);
+        }
+    }
+    swap(&scenarios[i + 1], &scenarios[high]);
+    return (i + 1);
+}
+
+// Quick Sort function
+void quickSort(Scenario* scenarios[], int low, int high) {
+    if (low < high) {
+        int pi = partition(scenarios, low, high);
+        quickSort(scenarios, low, pi - 1);
+        quickSort(scenarios, pi + 1, high);
+    }
+}
+
+// Binary search function
+Scenario* binary_search_scenario(Scenario* scenarios[], int num_scenarios, char* name) {
+    int low = 0;
+    int high = num_scenarios - 1;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        int cmp = strcmp(scenarios[mid]->name, name);
+
+        if (cmp == 0) {
+            return scenarios[mid];
+        } else if (cmp < 0) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return NULL;
+}
 
 int menu() {
     int option;
@@ -59,7 +105,9 @@ int menu() {
     printf("2. Resume Game\n");
     printf("3. Save Game\n");
     printf("4. Load Game\n");
-    printf("5. Exit Game\n");
+    printf("5. Specific Scenario Info\n");
+    printf("6. Specific Enemy Info\n");
+    printf("7. EXIT\n");
 
     do {
         option = read_int();
@@ -72,17 +120,33 @@ int menu() {
 
             case RESUME_GAME:
                 printf("Resuming game...\n");
-                // Add the logic to resume game here
+                
                 break;
 
             case SAVE_GAME:
                 printf("Saving game...\n");
-                // Add the logic to save game here
+                
                 break;
 
             case LOAD_GAME:
                 printf("Loading game...\n");
-                // Add the logic to load game here
+                
+                break;
+            
+            case SPECIFIC_SCENARIO_INFO:
+                // Declare the session variable
+                Session session_variable;
+
+                // Initialize the session
+                init_session(&session_variable);
+
+                printf("What scenario are you interested in?\n");
+                
+                break;
+
+            case SPECIFIC_ENEMY_INFO:
+                printf("Loading game...\n");
+                
                 break;
 
             case EXIT:
@@ -90,7 +154,7 @@ int menu() {
                 break;
 
             default:
-                printf("That is not an option.\n");
+                printf("%d is not an option.\n", option);
                 printf("Please, try it again.\n\n");
                 break;
         }

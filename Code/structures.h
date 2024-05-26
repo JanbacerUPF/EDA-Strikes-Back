@@ -14,7 +14,9 @@
 #define RESUME_GAME 2
 #define SAVE_GAME 3
 #define LOAD_GAME 4
-#define EXIT 5
+#define SPECIFIC_SCENARIO_INFO 5
+#define SPECIFIC_ENEMY_INFO 6
+#define EXIT 7
 
 #define PLAYER 0
 #define ENEMY 1
