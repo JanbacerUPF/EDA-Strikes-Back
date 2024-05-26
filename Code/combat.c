@@ -16,14 +16,6 @@ void drawProgressBar(int current, int max) {
     printf("] %d/%d\n", current, max);
 }
 
-// Function to clear the console screen (platform dependent)
-/*void clear_screen() {
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
-}*/
 
 void apply_effects(int* hp, int max_hp, int* def, int* atk, float hp_mod, float def_mod, float atk_mod, float multiplier, char* color) {
     int initial_hp = *hp;

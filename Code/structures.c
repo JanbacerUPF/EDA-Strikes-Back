@@ -516,24 +516,58 @@ Character story_character_creation(Session* session){
     Character player;
     player.vel=0;
     printWrapped(intro.prev_name);
-    printf("Enter the character's name: ");
+    printf(YELLOW BOLD"\nEnter the character's name: "RESET);
     scanf("%[^\n]s",player.name); // Set the input as the character's name
     while((getchar()) != '\n');
 
     printWrapped(intro.after_name);
-
+    printf("\n");
+    sleep(2);
     printWrapped(intro.prophecy);
-
+    printf("\n");
+    sleep(5);
     printWrapped(intro.last);
+    sleep(3);
+
+    printf(GREEN BOLD"What equipment do you choose?\n");
+    printf(CYAN BOLD"\n1. Light Clothing:  500 HP, 80 ATK, 40 DEF, 80 VEL\n");
+    printf(CYAN BOLD"\n2. Steel Armour:  500 HP, 60 ATK, 80 DEF, 50 VEL\n"RESET);
+    int outfit;
+    printf(YELLOW BOLD"Enter a valid option: ");
+    scanf("%d", &outfit);
+
+    while (outfit < 1 || outfit>2) {
+        printf("Please enter a valid option: ");
+        scanf("%d", &outfit);
+    }
+
+    if(outfit==1){
+        player.hp=500;
+        player.atk=80;
+        player.def=40;
+        player.vel=80;
+        player.soul=0;
+    }
+    else if(outfit==2){
+        player.hp=500;
+        player.atk=60;
+        player.def=80;
+        player.vel=50;
+        player.soul=0;
+    }
+    else{ //Default settings just in case
+        player.hp=200;
+        player.atk=50;
+        player.def=50;
+        player.vel=0;
+        player.soul=0;
+    }
 
     printf("\n");
-    player.hp=200;
-    player.atk=50;
-    player.def=50;
-    player.soul=0;
+    
 
     bool selected[MAX_SKILLS] = { false };  // Array to keep track of selected skills
-
+    printf(RESET"Before starting your journey traveler, tell me, what skills make you special? \n");
     for (int i = 0; i < PLAYER_SKILLS; i++) {
         printf("Choose the player's skills: \n");
 
@@ -559,7 +593,7 @@ Character story_character_creation(Session* session){
         }
 
         int option;
-        printf("Enter a valid option: ");
+        printf(YELLOW BOLD"Enter a valid option: ");
         scanf("%d", &option);
 
         while (option < 1 || option > count || selected[option - 1]) {
@@ -572,7 +606,7 @@ Character story_character_creation(Session* session){
         printf(CLEAR_SCREEN);
     }
 
-    printf("Your skills are: \n");
+    printf(RESET"Your skills are: \n");
     for(int i = 0; i<PLAYER_SKILLS; i++){
         printf("%s ",player.character_skills[i].name);
     }

@@ -64,13 +64,13 @@ int menu(){
         printf("*  2. Exit Game                 *\n");
         printf("*                               *\n");
         printf("*********************************\n");
-        // Example: Blue and Underline
         printf("Enter your choice: ");
         scanf("%d",&option);
         while((getchar()) != '\n');
         if(option==NEW_GAME){
             printf("Starting a New Game...\n\n\n");
-            //printf(CLEAR_SCREEN);
+            sleep(2);
+            printf(CLEAR_SCREEN);
             new_game();
         }
     }
