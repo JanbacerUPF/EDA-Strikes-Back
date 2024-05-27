@@ -16,134 +16,127 @@ void drawProgressBar(int current, int max) {
     printf("] %d/%d\n", current, max);
 }
 
-
-void apply_effects(int* hp, int max_hp, int* def, int* atk, float hp_mod, float def_mod, float atk_mod, float multiplier, char* color) {
-    int initial_hp = *hp;
-    *hp = fmin(max_hp, *hp + multiplier * hp_mod);
-    *def += multiplier * def_mod;
-    *atk += multiplier * atk_mod;
-
-    int hp_gained = *hp - initial_hp;
-    if (hp_mod != 0 || def_mod != 0 || atk_mod != 0) {
-        printf("%s", color);
-        if (hp_mod != 0) {
-            printf("%.1f HP ", hp_gained);
-        }
-        if (def_mod != 0) {
-            printf("%.1f DEF ", multiplier * def_mod);
-        }
-        printf("gained%s\n", RESET);
-    }
-}
-
-int calculate_damage(int atk, int def, float multiplier, char* color) {
-    int damage = fmax(0, multiplier * atk - def);
-    printf("%s%d Damage Dealt%s\n", color, damage, RESET);
-    return damage;
-}
-
-void use_skill(Character* player, Enemy* enemy, Skills* skill, int is_enemy) {
-    int damage = 0;
-    float multiplier = is_enemy ? enemy->multiplier_skill : 1.0;
-    int *hp, *atk, *def;
+void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multiplier, char* color, int is_enemy) {
+    int *hp, *def, *atk, *soul;
     int max_hp;
-    char *color;
 
     if (is_enemy) {
         hp = &enemy->hp;
         atk = &enemy->atk;
         def = &enemy->def;
+        soul = NULL;
         max_hp = enemy->max_hp;
-        color = RED;
     } else {
         hp = &player->hp;
         atk = &player->atk;
         def = &player->def;
-        max_hp = 200;
+        soul = &player->soul;
+        max_hp = 500;
+    }
+
+    int initial_hp = *hp;
+    *hp = fmin(max_hp, *hp + multiplier * skill->hp_mod);
+    *def += multiplier * skill->def_mod;
+    *atk += multiplier * skill->atk_mod;
+    if (soul && skill->type) {
+        *soul -= SOUL_COST;  // The soul skills cost SOUL
+    }
+
+    int hp_gained = *hp - initial_hp;
+    if (skill->hp_mod != 0 || skill->def_mod != 0 || skill->atk_mod != 0) {
+        printf("%s", color);
+        if (skill->hp_mod != 0) {
+            printf("%.1f HP ", hp_gained);
+        }
+        if (skill->def_mod != 0) {
+            printf("%.1f DEF ", multiplier * skill->def_mod);
+        }
+        printf("gained%s\n", RESET);
+    }
+}
+
+
+int calculate_damage(int atk, int def, float multiplier, char* color) {
+    int damage = fmax(0, multiplier * atk - def);
+    return damage;
+}
+
+void apply_damage(int* target_hp, int damage, char* color) {
+    *target_hp -= damage;
+    if (*target_hp < 0) {
+        *target_hp = 0;
+    }
+    printf("%s%d Damage Dealt%s\n", color, damage, RESET);
+}
+
+void use_skill(Character* player, Enemy* enemy, Skills* skill, int is_enemy) {
+    int damage = 0;
+    float multiplier = is_enemy ? enemy->multiplier_skill : 1.0;
+    char *color;
+
+    if (is_enemy) {
+        color = RED;
+    } else {
         color = BLUE;
     }
 
     printf("%s%s: ", color, skill->name);
 
     if (strcmp(skill->name, "Berserk Strike") == 0) {
-        damage = calculate_damage(*atk, is_enemy ? player->def : enemy->def, multiplier, color);
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod, skill->def_mod, skill->atk_mod, multiplier, color);
-        if (is_enemy) {
-            player->hp -= damage;
-        } else {
-            enemy->hp -= damage;
-        }
+        damage = calculate_damage(is_enemy ? enemy->atk : player->atk, is_enemy ? player->def : enemy->def, multiplier, color);
+        apply_effects(player, enemy, skill, multiplier, color, is_enemy);
+        apply_damage(is_enemy ? &player->hp : &enemy->hp, damage, color);
 
     } else if (strcmp(skill->name, "Iron Defense") == 0) {
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod, skill->def_mod, skill->atk_mod, multiplier, color);
+        apply_effects(player, enemy, skill, multiplier, color, is_enemy);
 
     } else if (strcmp(skill->name, "Regeneration") == 0) {
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod, skill->def_mod, skill->atk_mod, multiplier, color);
+        apply_effects(player, enemy, skill, multiplier, color, is_enemy);
 
     } else if (strcmp(skill->name, "Precision Strike") == 0) {
-        damage = calculate_damage(*atk * 1.25, is_enemy ? player->def : enemy->def, multiplier, color);
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod, skill->def_mod, skill->atk_mod, multiplier, color);
-        if (is_enemy) {
-            player->hp -= damage;
-        } else {
-            enemy->hp -= damage;
-        }
+        damage = calculate_damage((is_enemy ? enemy->atk : player->atk) * 1.25, is_enemy ? player->def : enemy->def, multiplier, color);
+        apply_effects(player, enemy, skill, multiplier, color, is_enemy);
+        apply_damage(is_enemy ? &player->hp : &enemy->hp, damage, color);
 
     } else if (strcmp(skill->name, "Rapid Assault") == 0) {
-        damage = calculate_damage(*atk * 1.5, is_enemy ? player->def : enemy->def, multiplier, color);
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod, skill->def_mod, skill->atk_mod, multiplier, color);
-        if (is_enemy) {
-            player->hp -= damage;
-        } else {
-            enemy->hp -= damage;
-        }
+        damage = calculate_damage((is_enemy ? enemy->atk : player->atk) * 1.5, is_enemy ? player->def : enemy->def, multiplier, color);
+        apply_effects(player, enemy, skill, multiplier, color, is_enemy);
+        apply_damage(is_enemy ? &player->hp : &enemy->hp, damage, color);
 
     } else if (strcmp(skill->name, "Shield Bash") == 0) {
-        damage = calculate_damage(*atk + 0.5 * *def, is_enemy ? player->def : enemy->def, multiplier, color);
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod, skill->def_mod, skill->atk_mod, multiplier, color);
-        if (is_enemy) {
-            player->hp -= damage;
-        } else {
-            enemy->hp -= damage;
-        }
+        damage = calculate_damage((is_enemy ? enemy->atk : player->atk) + 0.5 * (is_enemy ? enemy->def : player->def), is_enemy ? player->def : enemy->def, multiplier, color);
+        apply_effects(player, enemy, skill, multiplier, color, is_enemy);
+        apply_damage(is_enemy ? &player->hp : &enemy->hp, damage, color);
 
     } else if (strcmp(skill->name, "Vital Strike") == 0) {
         float strike_multiplier = (rand() % 2 == 0) ? 2.0 : 0.2;
-        damage = calculate_damage(*atk, is_enemy ? player->def : enemy->def, strike_multiplier * multiplier, color);
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod, skill->def_mod, skill->atk_mod, multiplier, color);
-        if (is_enemy) {
-            player->hp -= damage;
-        } else {
-            enemy->hp -= damage;
-        }
-        
+        damage = calculate_damage(is_enemy ? enemy->atk : player->atk, is_enemy ? player->def : enemy->def, strike_multiplier * multiplier, color);
+        apply_effects(player, enemy, skill, multiplier, color, is_enemy);
+        apply_damage(is_enemy ? &player->hp : &enemy->hp, damage, color);
+
     // Soul Skills -------------------------------------------------------------------------------------
-    } else if (strcmp(skill->name, "Soul Strike") == 0 && !is_enemy && player->soul >= 50) {
-        damage = calculate_damage(*atk + *atk * (player->soul / 100.0), enemy->def, 1.0, color);
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod, skill->def_mod, skill->atk_mod, 1, color);
-        enemy->hp -= damage;
-        player->soul -= 50; // The soul skills cost SOUL
+    } else if (strcmp(skill->name, "Soul Strike") == 0 && !is_enemy && player->soul >= SOUL_COST) {
+        damage = calculate_damage(player->atk + player->atk * (player->soul / 100.0), enemy->def, 1.0, color);
+        apply_effects(player, enemy, skill, 1, color, is_enemy);
+        apply_damage(&enemy->hp, damage, color);
 
-    } else if (strcmp(skill->name, "Guardian's Shield") == 0 && !is_enemy && player->soul >= 50) {
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod * player->soul, skill->def_mod, skill->atk_mod, 1, color);
-        player->soul -= 50; // The soul skills cost SOUL
+    } else if (strcmp(skill->name, "Guardian's Shield") == 0 && !is_enemy && player->soul >= SOUL_COST) {
+        apply_effects(player, enemy, skill, 1, color, is_enemy);
 
-    } else if (strcmp(skill->name, "Soul Armour") == 0 && !is_enemy && player->soul >= 50) {
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod, skill->def_mod * player->soul, skill->atk_mod, 1, color);
-        player->soul -= 50; // The soul skills cost SOUL
+    } else if (strcmp(skill->name, "Soul Armour") == 0 && !is_enemy && player->soul >= SOUL_COST) {
+        apply_effects(player, enemy, skill, 1, color, is_enemy);
 
-    } else if (strcmp(skill->name, "Soul Infusion") == 0 && !is_enemy && player->soul >= 50) {
-        damage = calculate_damage((player->soul / 100.0) * (player->soul / 100.0) * *atk, enemy->def, 1.0, color);
-        apply_effects(hp, max_hp, def, atk, skill->hp_mod, skill->def_mod, skill->atk_mod, 1, color);
-        enemy->hp -= damage;
-        player->soul -= 50; // The soul skills cost SOUL
+    } else if (strcmp(skill->name, "Soul Infusion") == 0 && !is_enemy && player->soul >= SOUL_COST) {
+        damage = calculate_damage((player->soul / 100.0) * (player->soul / 100.0) * player->atk, enemy->def, 1.0, color);
+        apply_effects(player, enemy, skill, 1, color, is_enemy);
+        apply_damage(&enemy->hp, damage, color);
     }
 
     printf("%sPlayer HP: ", BLUE);
-    drawProgressBar(player->hp, 200);
+    drawProgressBar(player->hp, 500);
     printf("%sEnemy HP: ", RED);
     drawProgressBar(enemy->hp, enemy->max_hp);
-    printf("%s\n", RESET);
+    printf("%s", RESET);
 }
 
 // QUEUE IMPLEMENTATION ---------------------------------------------------------------------
@@ -241,7 +234,7 @@ void player_turn(Character* player, Enemy* enemy, Session* session) {
         if (player->character_skills[i].type == 0) {
             printf("%s%d) %s => %s %s\n", BOLD, i + 1, player->character_skills[i].name, RESET, player->character_skills[i].effect);
         } else {
-            printf("%s%d) %s (40 SOUL) => %s %s\n", BOLD, i + 1, player->character_skills[i].name, RESET, player->character_skills[i].effect);
+            printf("%s%d) %s (%d SOUL) => %s %s\n", BOLD, i + 1, player->character_skills[i].name, SOUL_COST-10, RESET, player->character_skills[i].effect);
         }
     }
 
@@ -259,14 +252,17 @@ void player_turn(Character* player, Enemy* enemy, Session* session) {
     }
 
     // Check if the skill is one of the character's skills
-    if (skill_idx == 0) {
+    if (skill_idx == 0) { // view stats
         view_stats(player, enemy);
         player_turn(player, enemy,session);
-    } else if (skill_idx >= 1 && skill_idx <= 4) {
+    } else if (player->character_skills[skill_idx-1].type == 1 && player->soul < SOUL_COST) { // not enough SOUL
+        printf("Not enough SOUL\n"); 
+        player_turn(player, enemy,session);
+    } else if (skill_idx >= 1 && skill_idx <= 4) { // valid skill
         use_skill(player, enemy, &player->character_skills[skill_idx-1], 0);
         HashNode *skill_node=find_node(session->hash_skills,player->character_skills[skill_idx-1].name);
         skill_node->uses++;
-        printf("%s has ben used %d times.\n",skill_node->skill.name,skill_node->uses );
+        printf("%s has ben used %d times.\n\n",skill_node->skill.name,skill_node->uses );
     }
 }
 

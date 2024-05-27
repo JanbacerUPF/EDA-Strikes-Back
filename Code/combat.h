@@ -2,6 +2,7 @@
 #define COMBAT_H
 
 #include "structures.h"
+#define SOUL_COST 50 // Real soul cost -10 (Gain 10 every turn)
 
 // SKILLS_CHARACTER -----------------------------------------------------------------
 // Function to draw a progress bar with square symbols
