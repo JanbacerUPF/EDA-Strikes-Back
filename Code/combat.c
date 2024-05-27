@@ -261,7 +261,7 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
         if (player->character_skills[i].type == 0) {
             printf("%s%d) %s => %s %s\n", BOLD, i + 1, player->character_skills[i].name, RESET, player->character_skills[i].effect);
         } else {
-            printf("%s%d) %s (%d SOUL) => %s %s\n", BOLD, i + 1, player->character_skills[i].name, SOUL_COST - 10, RESET, player->character_skills[i].effect);
+            printf("%s%d) %s (%d SOUL) => %s %s\n", BOLD, i + 1, player->character_skills[i].name, SOUL_COST, RESET, player->character_skills[i].effect);
         }
     }
     // Display Time Strike if not used
@@ -312,6 +312,7 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
 void enemy_turn(Character* player, Enemy* enemy) {
     printf("%s%s's Turn\n", RED, enemy->name);
     use_skill(player, enemy, &enemy->skills[rand() % 4], 1); // Choose a skill at random
+    printf("\n");
 }
 
 int fight(Character* player, Enemy enemy, Session* session) {

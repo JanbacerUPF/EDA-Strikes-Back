@@ -3,7 +3,7 @@
 
 // Define constants
 #include "structures.h"
-#define SOUL_COST 50
+#define SOUL_COST 40
 
 // Define the StackNode structure
 typedef struct StackNode {
