@@ -16,14 +16,6 @@ void drawProgressBar(int current, int max) {
     printf("] %d/%d\n", current, max);
 }
 
-// Function to clear the console screen (platform dependent)
-/*void clear_screen() {
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
-}*/
 
 void apply_effects(int* hp, int max_hp, int* def, int* atk, float hp_mod, float def_mod, float atk_mod, float multiplier, char* color) {
     int initial_hp = *hp;
@@ -239,7 +231,7 @@ void view_stats(Character *player, Enemy *enemy) {
     printf("%s%-20s%-10d%-10d%-10d%-10s%s\n", RED, enemy->name, enemy->hp, enemy->atk, enemy->def, "-", RESET);
 }
 
-void player_turn(Character* player, Enemy* enemy) {
+void player_turn(Character* player, Enemy* enemy, Session* session) {
     int skill_idx;
     int valid_input = 0; // Variable to check if input is valid
 
@@ -269,9 +261,12 @@ void player_turn(Character* player, Enemy* enemy) {
     // Check if the skill is one of the character's skills
     if (skill_idx == 0) {
         view_stats(player, enemy);
-        player_turn(player, enemy);
+        player_turn(player, enemy,session);
     } else if (skill_idx >= 1 && skill_idx <= 4) {
         use_skill(player, enemy, &player->character_skills[skill_idx-1], 0);
+        HashNode *skill_node=find_node(session->hash_skills,player->character_skills[skill_idx-1].name);
+        skill_node->uses++;
+        printf("%s has ben used %d times.\n",skill_node->skill.name,skill_node->uses );
     }
 }
 
@@ -281,7 +276,9 @@ void enemy_turn(Character* player, Enemy* enemy) {
     use_skill(player, enemy, &enemy->skills[rand() % 4], 1); // Choose a skill at random
 }
 
-int fight(Character* player, Enemy enemy){  
+int fight(Character* player, Enemy enemy, Session* session){ 
+    printf("\nPreparing for battle...\n");
+    sleep(2); // 5-second delay
     Queue* q = createQueue(); // Create an empty queue
     fill_fight_queue(q, player->vel, enemy.turns);
     int base_atk = player->atk;
@@ -294,29 +291,29 @@ int fight(Character* player, Enemy enemy){
             player->soul += (player->soul <= 100) ? 10 : 0; // Add 10 SOUL each turn
             printf("SOUL AVAILABLE:  %d\n", player->soul);
             player->atk = base_atk; // Reset ATK each turn
-            player_turn(player, &enemy);
+            player_turn(player, &enemy, session);
         }else{ // ENEMY TURN
             enemy.atk = base_atk_e; // Reset enemy ATK each turn
             enemy_turn(player, &enemy); 
         } sleep(1); // Wait between turns, to give time for the player to understand what's happening
 
         if(enemy.hp <= 0){
-            printf("%s__  __               _       __          \n"
+            printf(YELLOW BOLD"__  __               _       __          \n"
                    "\\ \\/ /___  __  __   | |     / /___  ____ \n"
                    " \\  / __ \\/ / / /   | | /| / / __ \\/ __ \\\n"
                    " / / /_/ / /_/ /    | |/ |/ / /_/ / / / /\n"
-                   "/_/\\____/\\__,_/     |__/|__/\\____/_/ /_/ %s\n", INVERT, RESET);
+                   "/_/\\____/\\__,_/     |__/|__/\\____/_/ /_/ %s\n", RESET);
             player->def = base_def; // Reset DEF each fight
             return 0; // player win
         }else if (player->hp <= 0){
             break;
         }
     }
-printf("%S __  __               __               __ \n"
+printf(RED BOLD" __  __               __               __ \n"
        "\\ \\/ /___  __  __   / /   ____  _____/ /_\n"
        " \\  / __ \\/ / / /  / /   / __ \\/ ___/ __/\n"
        " / / /_/ / /_/ /  / /___/ /_/ (__  ) /_  \n"
-       "/_/\\____/\\__,_/  /_____\\____/____/\\__/ %s\n", INVERT, RESET);
+       "/_/\\____/\\__,_/  /_____\\____/____/\\__/ %s\n", RESET);
     player->def = base_def; // Reset DEF each fight
     return 1; // player loss
 }
