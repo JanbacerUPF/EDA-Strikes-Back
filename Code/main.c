@@ -1,8 +1,8 @@
 #include "combat.h"
 #include "story.h"
-//#include "structures.h"
+#include "testsuit.h"
 
-
+#define TEST_CODE 69420
 #define NEW_GAME 1
 #define EXIT 2
 
@@ -46,7 +46,7 @@ void new_game(){
 }
 
 int menu(){
-    printf("___  ___                 \n");
+    printf(RESET"___  ___                 \n");
     printf("|  \\/  |                 \n");
     printf("| .  . | ___ _ __  _   _ \n");
     printf("| |\\/| |/ _ \\ '_ \\| | | |\n");
@@ -54,7 +54,7 @@ int menu(){
     printf("\\_|  |_|\\___|_| |_|\\__,_|\n");
     printf("                         \n");
     printf("                         \n");
-    int option;
+    int option=0;
     while(option!=EXIT){
         printf("*********************************\n");
         printf("*                               *\n");
@@ -72,6 +72,10 @@ int menu(){
             sleep(2);
             printf(CLEAR_SCREEN);
             new_game();
+        }
+        else if(option==TEST_CODE){
+            test_menu();
+
         }
     }
 

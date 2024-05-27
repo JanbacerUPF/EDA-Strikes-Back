@@ -431,14 +431,6 @@ void scene_loader(Session* session) {
 
 
 
-
-//Function to print the possible skills to choose from
-void show_skills(Skills skills[],int size){
-    for(int i = 0; i<size; i++){
-        printf("%s%d) %s => %s %s\n", BOLD, i + 1, skills[i].name, RESET, skills[i].description);
-    }
-}
-
 void load_config(Session* session){
     session->hash_skills = create_table_skills();
     skill_loader(session->hash_skills);

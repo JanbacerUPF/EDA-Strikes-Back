@@ -140,6 +140,12 @@ HashTable* create_table_skills();
 
 void skill_loader(HashTable* hashTable);
 
+void enemy_loader(Enemy enemies_array[], HashTable* hash_skills);
+
+void scene_loader(Session* session);
+
+
+
 void load_config(Session* session);
 
 Skills* find_skill(HashTable* hashTable, char* name);
