@@ -188,26 +188,29 @@ void new_game(){
 }
 
 int menu(){
-    printf(RESET"___  ___                 \n");
-    printf("|  \\/  |                 \n");
-    printf("| .  . | ___ _ __  _   _ \n");
-    printf("| |\\/| |/ _ \\ '_ \\| | | |\n");
-    printf("| |  | |  __/ | | | |_| |\n");
-    printf("\\_|  |_|\\___|_| |_|\\__,_|\n");
-    printf("                         \n");
-    printf("                         \n");
+    printf(CLEAR_SCREEN);
+    printf(CYAN BOLD"    __________  ___       _______________  ______ __ ___________\n"RESET);
+    printf(CYAN BOLD"   / ____/ __ \\/   |     / ___/_  __/ __ \\/  _/ //_// ____/ ___/\n"RESET);
+    printf(CYAN BOLD"  / __/ / / / / /| |     \\__ \\ / / / /_/ // // ,<  / __/  \\__ \\ \n"RESET);
+    printf(CYAN BOLD" / /___/ /_/ / ___ |    ___/ // / / _, _// // /| |/ /___ ___/ / \n"RESET);
+    printf(CYAN BOLD"/_____/_____/_/ _|_|___/____//_/ /_/ |_/___/_/ |_/_____//____/  \n"RESET);
+    printf(CYAN BOLD"   / __ )/   | / ____/ //_/                                     \n"RESET);
+    printf(CYAN BOLD"  / __  / /| |/ /   / ,<                                        \n"RESET);
+    printf(CYAN BOLD" / /_/ / ___ / /___/ /| |                                       \n"RESET);
+    printf(CYAN BOLD"/_____/_/  |_\\____/_/ |_|                                       \n"RESET);
+    printf(CYAN BOLD"                                                                \n"RESET);
     int option=0;
     while(option!=EXIT){
-        printf("*********************************\n");
-        printf("*                               *\n");
-        printf("*        SELECT AN OPTION       *\n");
-        printf("*                               *\n");
-        printf("*  1. New Game                  *\n");
-        printf("*  2. Load Game                 *\n");
-        printf("*  3. Exit Game                 *\n");
-        printf("*                               *\n");
-        printf("*********************************\n");
-        printf("Enter your choice: ");
+        printf(YELLOW BOLD"---------------------------------\n"RESET);
+        printf(YELLOW BOLD"|                               |\n"RESET);
+        printf(YELLOW BOLD"|      "GREEN UNDERLINE"SELECT AN OPTION"RESET YELLOW BOLD"         |\n"RESET);
+        printf(YELLOW BOLD"|                               |\n"RESET);
+        printf(YELLOW BOLD"|  "GREEN"1. New Game"YELLOW BOLD"                  |\n"RESET);
+        printf(YELLOW BOLD"|  "GREEN"2. Load Game"YELLOW BOLD"                 |\n"RESET);
+        printf(YELLOW BOLD"|  "GREEN"3. Exit Game"YELLOW BOLD"                 |\n"RESET);
+        printf(YELLOW BOLD"|                               |\n"RESET);
+        printf(YELLOW BOLD"---------------------------------\n"RESET);
+        printf(BOLD"Enter your choice: "RESET);
         scanf("%d",&option);
         while((getchar()) != '\n');
         if(option==NEW_GAME){
