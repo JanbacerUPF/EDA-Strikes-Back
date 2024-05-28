@@ -328,6 +328,7 @@ void scene_loader(Session* session) {
         cJSON* name = cJSON_GetObjectItemCaseSensitive(scene, "name");
         cJSON* description = cJSON_GetObjectItemCaseSensitive(scene, "description");
         cJSON* decisions = cJSON_GetObjectItemCaseSensitive(scene, "decisions");
+        cJSON* ID = cJSON_GetObjectItemCaseSensitive(scene, "ID");
 
         if (name == NULL || description == NULL || decisions == NULL || !cJSON_IsArray(decisions)) continue;
 
@@ -337,6 +338,7 @@ void scene_loader(Session* session) {
             continue;
         }
 
+        current_scenario->ID=ID->valueint;
         strncpy(current_scenario->name, name->valuestring, MAX_NAME - 1);
         current_scenario->name[MAX_NAME - 1] = '\0';
         strncpy(current_scenario->description, description->valuestring, MAX_LENGTH - 1);
