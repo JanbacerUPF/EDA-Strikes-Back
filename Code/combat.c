@@ -293,7 +293,7 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
             printf(BOLD"%s%d) %s => %s ", color, i + 1, player->character_skills[i].name, RESET);
             printWrapped(player->character_skills[i].effect);
         } else {
-            printf("%s%d) %s (%d SOUL) => %s %s\n", BOLD, i + 1, player->character_skills[i].name, SOUL_COST, RESET, player->character_skills[i].effect);
+            printf(BOLD"%s%d) %s (%d SOUL) => %s %s\n", color, i + 1, player->character_skills[i].name, SOUL_COST, RESET, player->character_skills[i].effect);
         }
     }
     // Display Time Strike if not used
