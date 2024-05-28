@@ -1,5 +1,6 @@
 #include "story.h"
 #include "combat.h"
+#include "main.h"
 #include <unistd.h> // For sleep function
 
 
@@ -134,6 +135,7 @@ void printWrapped(const char *str) {
 
 void open_scenario(Scenario* scenario, Session* session){
     printf(CLEAR_SCREEN); 
+    save_session_to_file(session);
     printf("\n\n\n");
     printEnteringScenario(scenario->name);
     if(scenario->completed==0){

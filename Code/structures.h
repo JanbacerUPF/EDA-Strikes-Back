@@ -9,6 +9,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <math.h>
+#include <ctype.h>
 
 #include "cJSON.h"
 
@@ -86,6 +87,7 @@ typedef struct Scenario{
     struct Scenario *Previous;
     Decision* decisions;
     int dec_num;
+    int ID;
 }Scenario;
 
 //Character: name, hp/atk/def points, and an array of 4 skills.
@@ -118,6 +120,7 @@ typedef struct Session {
     HashTable* hash_skills;
     Character player;
     Scenario *current_scenario;
+    int current_ID;
     Scenario *first_Scenario;
     Enemy enemies[MAX_ENEMIES];
 } Session;
@@ -139,6 +142,12 @@ HashTable* create_table_skills();
 
 
 void skill_loader(HashTable* hashTable);
+
+void enemy_loader(Enemy enemies_array[], HashTable* hash_skills);
+
+void scene_loader(Session* session);
+
+
 
 void load_config(Session* session);
 

@@ -328,6 +328,7 @@ void scene_loader(Session* session) {
         cJSON* name = cJSON_GetObjectItemCaseSensitive(scene, "name");
         cJSON* description = cJSON_GetObjectItemCaseSensitive(scene, "description");
         cJSON* decisions = cJSON_GetObjectItemCaseSensitive(scene, "decisions");
+        cJSON* ID = cJSON_GetObjectItemCaseSensitive(scene, "ID");
 
         if (name == NULL || description == NULL || decisions == NULL || !cJSON_IsArray(decisions)) continue;
 
@@ -337,6 +338,7 @@ void scene_loader(Session* session) {
             continue;
         }
 
+        current_scenario->ID=ID->valueint;
         strncpy(current_scenario->name, name->valuestring, MAX_NAME - 1);
         current_scenario->name[MAX_NAME - 1] = '\0';
         strncpy(current_scenario->description, description->valuestring, MAX_LENGTH - 1);
@@ -430,14 +432,6 @@ void scene_loader(Session* session) {
 }
 
 
-
-
-//Function to print the possible skills to choose from
-void show_skills(Skills skills[],int size){
-    for(int i = 0; i<size; i++){
-        printf("%s%d) %s => %s %s\n", BOLD, i + 1, skills[i].name, RESET, skills[i].description);
-    }
-}
 
 void load_config(Session* session){
     session->hash_skills = create_table_skills();
