@@ -43,10 +43,11 @@ typedef struct Skills{
     char name[MAX_NAME];
     char description[MAX_LENGTH];
     char effect[MAX_LENGTH];
-    int type; //Define the type as an integer that can be 0 or 1(easier implementation)
+    int soul_type; // 0 if soulless, 1 if soul
     float hp_mod;
     float atk_mod;
     float def_mod;
+    int dmg_type; // 0 if heal type, 1 if dmg type
 }Skills;
 
 //Enemy: name, atk/hp/def.

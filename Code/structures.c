@@ -127,11 +127,12 @@ void skill_loader(HashTable* hashTable){
 
         cJSON* name = cJSON_GetObjectItemCaseSensitive(skill, "name");
         cJSON* description = cJSON_GetObjectItemCaseSensitive(skill, "description");
-        cJSON* type = cJSON_GetObjectItemCaseSensitive(skill, "type");
+        cJSON* soul_type = cJSON_GetObjectItemCaseSensitive(skill, "soul_type");
         cJSON* hp_mod = cJSON_GetObjectItemCaseSensitive(skill, "hp_mod");
         cJSON* atk_mod = cJSON_GetObjectItemCaseSensitive(skill, "atk_mod");
         cJSON* def_mod = cJSON_GetObjectItemCaseSensitive(skill, "def_mod");
         cJSON* effect = cJSON_GetObjectItemCaseSensitive(skill, "effect");
+        cJSON* dmg_type = cJSON_GetObjectItemCaseSensitive(skill, "dmg_type");
         Skills currentskill;
         if (cJSON_IsString(name) && name->valuestring != NULL) {
             strncpy(currentskill.name, name->valuestring, MAX_NAME - 1);
@@ -147,8 +148,8 @@ void skill_loader(HashTable* hashTable){
             currentskill.description[MAX_LENGTH - 1] = '\0';
         }
 
-        if (cJSON_IsNumber(type)) {
-            currentskill.type = type->valueint;
+        if (cJSON_IsNumber(soul_type)) {
+            currentskill.soul_type = soul_type->valueint;
         }
 
 
@@ -162,6 +163,10 @@ void skill_loader(HashTable* hashTable){
 
         if (cJSON_IsNumber(def_mod)) {
             currentskill.def_mod = def_mod->valueint;
+        }
+
+        if (cJSON_IsNumber(dmg_type)) {
+            currentskill.dmg_type = dmg_type->valueint;
         }
 
         insert_skill(hashTable, currentskill);
@@ -442,6 +447,7 @@ void load_config(Session* session){
 
 }
 
+/*
 Character character_creation(Session* session){
     printf("Welcome to the character creation\n");
     Character player;
@@ -503,7 +509,7 @@ Character character_creation(Session* session){
     
     return player;
 }
-
+*/
 
 Character story_character_creation(Session* session){
     Intro intro= introduction();
@@ -573,8 +579,9 @@ Character story_character_creation(Session* session){
             while (node != NULL) {
                 if (!selected[count]) { // Only display non-selected skills
                     skill_map[count] = node;
+                    char *color = node->skill.dmg_type ? MAGENTA : GREEN;
                     //printf("%d: %s => %s\n", count + 1, node->skill.name, node->skill.description);
-                    printf("%s%d) %s => %s %s\n", BOLD, count + 1, node->skill.name, RESET, node->skill.description);
+                    printf(BOLD"%s%d) %s => %s %s\n", color, count + 1, node->skill.name, RESET, node->skill.description);
                 }
                 count++;
                 node = node->next;
@@ -587,7 +594,7 @@ Character story_character_creation(Session* session){
         }
 
         int option;
-        printf(YELLOW BOLD"Enter a valid option: ");
+        printf(YELLOW BOLD"Enter a valid option: "RESET);
         scanf("%d", &option);
 
         while (option < 1 || option > count || selected[option - 1]) {

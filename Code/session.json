@@ -18,6 +18,15 @@
 			}, {
 				"name":	"Shield Bash",
 				"uses":	0
+			}, {
+				"name":	"Soul Strike",
+				"uses":	0
+			}, {
+				"name":	"Vital Strike",
+				"uses":	0
+			}, {
+				"name":	"Shield Bash",
+				"uses":	0
 			}]
 	},
 	"ID":	0

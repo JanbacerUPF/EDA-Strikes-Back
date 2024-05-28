@@ -152,7 +152,7 @@ void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multipl
     *hp = fmin(max_hp, *hp + multiplier * skill->hp_mod);
     *def += multiplier * skill->def_mod;
     *atk += multiplier * skill->atk_mod;
-    if (soul && skill->type) {
+    if (soul && skill->soul_type) {
         *soul -= SOUL_COST;  // The soul skills cost SOUL
     }
 
@@ -285,21 +285,20 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
     int skill_idx;
     int valid_input = 0; // Variable to check if input is valid
 
-
     // Display the 4 skills
     printf("%s0) View Stats\n%s", BOLD, RESET);
     for (int i = 0; i < 4; i++) {
-        if (player->character_skills[i].type == 0) {
-            printf("%s%d) %s => %s ", BOLD, i + 1, player->character_skills[i].name, RESET);
+        char *color = player->character_skills[i].dmg_type ? MAGENTA : GREEN;
+        if (player->character_skills[i].soul_type == 0) {
+            printf(BOLD"%s%d) %s => %s ", color, i + 1, player->character_skills[i].name, RESET);
             printWrapped(player->character_skills[i].effect);
         } else {
-            printf("%s%d) %s (%d SOUL) => %s", BOLD, i + 1, player->character_skills[i].name, SOUL_COST, RESET);
-            printWrapped(player->character_skills[i].effect);
+            printf("%s%d) %s (%d SOUL) => %s %s\n", BOLD, i + 1, player->character_skills[i].name, SOUL_COST, RESET, player->character_skills[i].effect);
         }
     }
     // Display Time Strike if not used
     if (!(*time_strike_used)) {
-        printf("%s5) Time Strike => Reuse a previous skill with double power%s\n", BOLD, RESET);
+        printf(BOLD"5) Time Strike => Reuse a previous skill with double power%s\n", RESET);
     }
 
 
@@ -332,10 +331,10 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
             printf("No previous skills to reuse.\n");
             player_turn(player, enemy, session, skill_stack, time_strike_used);
         }
-    } else if (player->character_skills[skill_idx - 1].type == 1 && player->soul < SOUL_COST) { // Not enough SOUL
+    } else if (player->character_skills[skill_idx - 1].soul_type == 1 && player->soul < SOUL_COST) { // Not enough SOUL
         printf("Not enough SOUL\n");
         player_turn(player, enemy, session, skill_stack, time_strike_used);
-    } else if (skill_idx >= 1 && skill_idx <= 4) { // valid skill
+    } else if (skill_idx >= 1 && skill_idx <= 4) { // Valid skill
         use_skill(player, enemy, &player->character_skills[skill_idx - 1], 0, 0);
         push(skill_stack, &player->character_skills[skill_idx - 1]); // Push used skill onto stack
         HashNode* skill_node = find_node(session->hash_skills, player->character_skills[skill_idx - 1].name);
