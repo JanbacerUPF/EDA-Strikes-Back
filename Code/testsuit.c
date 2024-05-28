@@ -154,11 +154,6 @@ void test_combat(Session* session) {
 
     // Start the fight
     int result = fight(&player, selected_enemy, session);
-    if (result == 0) {
-        printf("Player won the fight!\n");
-    } else {
-        printf("Player lost the fight.\n");
-    }
 }
 
 
