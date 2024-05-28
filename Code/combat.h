@@ -33,6 +33,8 @@ typedef struct Queue {
 void push(StackNode** top, Skills* skill);
 Skills* pop(StackNode** top);
 Skills* get_kth_skill(StackNode* top, int k);
+int stack_size(StackNode* top);
+
 
 
 // Display functions
@@ -47,7 +49,8 @@ void apply_damage(int* target_hp, int damage, char* color);
 
 
 // Skill usage function
-void use_skill(Character* player, Enemy* enemy, Skills* skill, int is_enemy);
+void use_skill(Character* player, Enemy* enemy, Skills* skill, int is_enemy, int time_strike);
+
 
 
 // Queue functions
