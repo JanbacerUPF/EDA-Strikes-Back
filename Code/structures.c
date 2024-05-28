@@ -525,24 +525,24 @@ Character story_character_creation(Session* session){
 
     printf(GREEN BOLD"What equipment do you choose?\n");
     printf(CYAN BOLD"\n1. Light Clothing:  500 HP, 80 ATK, 40 DEF, 80 VEL\n");
-    printf(CYAN BOLD"\n2. Steel Armour:  500 HP, 60 ATK, 80 DEF, 50 VEL\n"RESET);
+    printf(CYAN BOLD"\n2. Steel Armour:  500 HP, 60 ATK, 80 DEF, 50 VEL\n\n"RESET);
     int outfit;
-    printf(YELLOW BOLD"Enter a valid option: ");
+    printf(YELLOW BOLD"Enter a valid option: "RESET);
     scanf("%d", &outfit);
 
-    while (outfit < 1 || outfit>2) {
-        printf("Please enter a valid option: ");
+    while (outfit < 1 || outfit > 2) {
+        printf("Please enter a valid option: "RESET);
         scanf("%d", &outfit);
     }
 
-    if(outfit==1){
+    if(outfit == 1){
         player.hp=500;
         player.atk=80;
         player.def=40;
         player.vel=80;
         player.soul=0;
     }
-    else if(outfit==2){
+    else if(outfit == 2){
         player.hp=500;
         player.atk=60;
         player.def=80;
