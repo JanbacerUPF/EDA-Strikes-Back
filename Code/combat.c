@@ -143,7 +143,7 @@ void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multipl
         atk = &player->atk;
         def = &player->def;
         soul = &player->soul;
-        max_hp = 500;
+        max_hp = MAX_PLAYER_HP;
     }
 
 
@@ -155,9 +155,9 @@ void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multipl
         *soul -= SOUL_COST;  // The soul skills cost SOUL
     }
 
-
+    // Print HP and/or DEF gained
     int hp_gained = *hp - initial_hp;
-    if (skill->hp_mod != 0 || skill->def_mod != 0 || skill->atk_mod != 0) {
+    if (skill->hp_mod != 0 || skill->def_mod != 0) {
         printf("%s", color);
         if (skill->hp_mod != 0) {
             printf("%.1f HP ", hp_gained);
@@ -169,7 +169,7 @@ void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multipl
     }
 }
 
-// Finish
+
 void deal_damage(int atk, int def, float multiplier, char* color, int* target_hp) {   
     int damage = fmax(0, multiplier * atk - def);
     *target_hp -= damage;
@@ -177,18 +177,9 @@ void deal_damage(int atk, int def, float multiplier, char* color, int* target_hp
         *target_hp = 0;
     }
     printf("%s%d Damage Dealt%s\n", color, damage, RESET);
-    printf("(%.2f (mult) * %d (atk)) - %d (def) = %.2f (dmg)\n", multiplier, atk, def, multiplier * atk - def); // Test print
+    printf("(%.2f (mult) * %d (atk)) - %d (def) = %.2f (dmg)    TEST PRINT\n", multiplier, atk, def, multiplier * atk - def); // Test print
 }
 
-/*
-void apply_damage(int* target_hp, int damage, char* color) {
-    *target_hp -= damage;
-    if (*target_hp < 0) {
-        *target_hp = 0;
-    }
-    printf("%s%d Damage Dealt%s\n", color, damage, RESET);
-}
-*/
 
 void use_skill(Character* player, Enemy* enemy, Skills* skill, int is_enemy, int time_strike) {
     float multiplier; 
@@ -256,7 +247,7 @@ void use_skill(Character* player, Enemy* enemy, Skills* skill, int is_enemy, int
     }
 
     printf("%sPlayer HP: ", BLUE);
-    drawProgressBar(player->hp, 500);
+    drawProgressBar(player->hp, MAX_PLAYER_HP);
     printf("%sEnemy HP: ", RED);
     drawProgressBar(enemy->hp, enemy->max_hp);
     printf("%s", RESET);
