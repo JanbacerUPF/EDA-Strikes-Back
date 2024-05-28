@@ -1,10 +1,10 @@
 {
 	"player":	{
-		"name":	"ef",
+		"name":	"fe",
 		"hp":	500,
-		"atk":	80,
-		"def":	40,
-		"vel":	80,
+		"atk":	60,
+		"def":	80,
+		"vel":	50,
 		"soul":	0,
 		"character_skills":	[{
 				"name":	"Rapid Assault",
@@ -13,10 +13,10 @@
 				"name":	"Soul Strike",
 				"uses":	0
 			}, {
-				"name":	"Vital Strike",
+				"name":	"Soul Armour",
 				"uses":	0
 			}, {
-				"name":	"Soul Infusion",
+				"name":	"Soul Strike",
 				"uses":	0
 			}]
 	},
