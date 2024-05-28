@@ -1,22 +1,22 @@
 {
 	"player":	{
-		"name":	"fe",
+		"name":	"23",
 		"hp":	500,
-		"atk":	60,
-		"def":	80,
-		"vel":	50,
+		"atk":	80,
+		"def":	40,
+		"vel":	80,
 		"soul":	0,
 		"character_skills":	[{
+				"name":	"Iron Defense",
+				"uses":	0
+			}, {
+				"name":	"Soul Infusion",
+				"uses":	0
+			}, {
 				"name":	"Rapid Assault",
 				"uses":	0
 			}, {
-				"name":	"Soul Strike",
-				"uses":	0
-			}, {
 				"name":	"Soul Armour",
-				"uses":	0
-			}, {
-				"name":	"Soul Strike",
 				"uses":	0
 			}]
 	},
