@@ -138,8 +138,8 @@ void skill_loader(HashTable* hashTable){
             currentskill.name[MAX_NAME - 1] = '\0';
         }
         if (cJSON_IsString(effect) && effect->valuestring != NULL) {
-            strncpy(currentskill.effect, effect->valuestring, MAX_NAME - 1);
-            currentskill.effect[MAX_NAME - 1] = '\0';
+            strncpy(currentskill.effect, effect->valuestring, MAX_LENGTH - 1);
+            currentskill.effect[MAX_LENGTH - 1] = '\0';
         }
 
         if (cJSON_IsString(description) && description->valuestring != NULL) {
@@ -563,7 +563,7 @@ Character story_character_creation(Session* session){
     bool selected[MAX_SKILLS] = { false };  // Array to keep track of selected skills
     printf(RESET"Before starting your journey traveler, tell me, what skills make you special? \n");
     for (int i = 0; i < PLAYER_SKILLS; i++) {
-        printf("Choose the player's skills: \n");
+        printf(GREEN UNDERLINE BOLD"\nChoose the player's skills: \n"RESET);
 
         int count = 0;
         HashNode* skill_map[MAX_SKILLS] = { 0 }; // Array to map displayed options to hash table nodes

@@ -1,4 +1,5 @@
 #include "Combat.h"
+#include "story.h"
 
 
 // STACK IMPLEMENTATION ------------------------------------------------------------
@@ -289,9 +290,11 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
     printf("%s0) View Stats\n%s", BOLD, RESET);
     for (int i = 0; i < 4; i++) {
         if (player->character_skills[i].type == 0) {
-            printf("%s%d) %s => %s %s\n", BOLD, i + 1, player->character_skills[i].name, RESET, player->character_skills[i].effect);
+            printf("%s%d) %s => %s ", BOLD, i + 1, player->character_skills[i].name, RESET);
+            printWrapped(player->character_skills[i].effect);
         } else {
-            printf("%s%d) %s (%d SOUL) => %s %s\n", BOLD, i + 1, player->character_skills[i].name, SOUL_COST, RESET, player->character_skills[i].effect);
+            printf("%s%d) %s (%d SOUL) => %s", BOLD, i + 1, player->character_skills[i].name, SOUL_COST, RESET);
+            printWrapped(player->character_skills[i].effect);
         }
     }
     // Display Time Strike if not used

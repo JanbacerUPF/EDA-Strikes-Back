@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "testsuit.h"
 #include "combat.h"
+#include "story.h"
 
 
 
@@ -73,11 +74,8 @@ void test_json(Session* session){
 }
 
 
-// Function to test the combat system
-void test_combat(Session* session) {
-    // Load skills and enemies
-    test_json(session);
-
+//Function to easily create a character to perform the tests.
+Character test_character(Session* session){
     // Print available skills
     printf("Available skills:\n");
     int skill_index = 1;
@@ -121,6 +119,60 @@ void test_combat(Session* session) {
         }
     }
 
+    // Initialize the player character
+    Character player;
+    strcpy(player.name, "Player");
+
+    printf(GREEN BOLD"What equipment do you choose?\n");
+    printf(CYAN BOLD"\n1. Light Clothing:  500 HP, 80 ATK, 40 DEF, 80 VEL\n");
+    printf(CYAN BOLD"\n2. Steel Armour:  500 HP, 60 ATK, 80 DEF, 50 VEL\n\n"RESET);
+    int outfit;
+    printf(YELLOW BOLD"Enter a valid option: "RESET);
+    scanf("%d", &outfit);
+
+    while (outfit < 1 || outfit > 2) {
+        printf("Please enter a valid option: "RESET);
+        scanf("%d", &outfit);
+    }
+
+    if(outfit == 1){
+        player.hp=500;
+        player.atk=80;
+        player.def=40;
+        player.vel=80;
+        player.soul=0;
+    }
+    else if(outfit == 2){
+        player.hp=500;
+        player.atk=60;
+        player.def=80;
+        player.vel=50;
+        player.soul=0;
+    }
+    else{ //Default settings just in case
+        player.hp=200;
+        player.atk=50;
+        player.def=50;
+        player.vel=0;
+        player.soul=0;
+    }
+
+    printf("\n");
+
+    for (int i = 0; i < 4; i++) {
+        player.character_skills[i] = selected_skills[i];
+    }
+    return player;
+}
+
+
+// Function to test the combat system
+void test_combat(Session* session) {
+    // Load skills and enemies
+    load_config(session);
+
+    
+
     // Let the player choose an enemy
     printf("Choose an enemy for the fight:\n");
     for (int i = 0; i < MAX_ENEMIES; i++) {
@@ -140,20 +192,43 @@ void test_combat(Session* session) {
     Enemy selected_enemy = session->enemies[enemy_idx - 1];
     printf("Selected Enemy: %s\n", selected_enemy.name);
 
-    // Initialize the player character
-    Character player;
-    strcpy(player.name, "Player");
-    player.hp = 500;
-    player.atk = 50;
-    player.def = 30;
-    player.soul = 0;
-    player.vel = 50;
-    for (int i = 0; i < 4; i++) {
-        player.character_skills[i] = selected_skills[i];
-    }
+    Character player = test_character(session);
 
     // Start the fight
     int result = fight(&player, selected_enemy, session);
+}
+
+
+void scenario_test(Session* session){
+
+    load_config(session);
+
+    test_character(session);
+
+    Scenario* test_scenario = session->first_Scenario;
+    printf("Choose an scenario\n");
+    int i;
+    for(i = 0; i<MAX_SCENARIOS-1; i++){
+        printf("%d) %s\n", i+1, test_scenario->name);
+        test_scenario=test_scenario->Next;
+    }
+    printf("%d) %s\n", i+1, test_scenario->name);
+    int option = 0;
+    while (1) {
+        printf("Select scenario: ");
+        if (scanf("%d", &option) != 1 || option < 1 || option > MAX_SCENARIOS) {
+            while (getchar() != '\n'); // Clear the input buffer
+            printf("Invalid input. Please enter a number between 1 and %d.\n", MAX_SCENARIOS);
+        } else {
+            break;
+        }
+    }
+
+    for(i = MAX_SCENARIOS-option; i>0; i--){
+        test_scenario=test_scenario->Previous;
+    }
+    open_scenario(test_scenario, session);
+
 }
 
 
@@ -163,6 +238,7 @@ void test_menu(){
     while(option!=4){
     printf("1. Test JSON loads\n");
     printf("2. Test combat function\n");
+    printf("3. Test scenario function\n");
     printf("4. EXIT\n");
     printf("Enter a valid option: ");
     scanf("%d",&option);
@@ -172,6 +248,9 @@ void test_menu(){
         }
         else if(option==2){
             test_combat(&test_session);
+        }
+        else if(option==3){
+            scenario_test(&test_session);
         }
     }
 }
