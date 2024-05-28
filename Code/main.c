@@ -1,7 +1,7 @@
 #include "main.h"
 
 // Function to save Character (name, attributes, and skill names)
-cJSON* save_character(Character* character) {
+cJSON* save_character(Character* character, Session* session) {
     cJSON* json_character = cJSON_CreateObject();
     cJSON_AddStringToObject(json_character, "name", character->name);
     cJSON_AddNumberToObject(json_character, "hp", character->hp);
@@ -12,16 +12,21 @@ cJSON* save_character(Character* character) {
 
     cJSON* json_skills = cJSON_CreateArray();
     for (int i = 0; i < PLAYER_SKILLS; i++) {
-        cJSON_AddItemToArray(json_skills, cJSON_CreateString(character->character_skills[i].name));
+        cJSON* json_skill = cJSON_CreateObject();
+        cJSON_AddStringToObject(json_skill, "name", character->character_skills[i].name);
+        HashNode* skill_node=find_node(session->hash_skills,character->character_skills[i].name);
+        cJSON_AddNumberToObject(json_skill, "uses", skill_node->uses);
+        cJSON_AddItemToArray(json_skills, json_skill);
     }
     cJSON_AddItemToObject(json_character, "character_skills", json_skills);
     return json_character;
 }
 
+
 // Function to save Session (only the player)
-cJSON* save_session(Session* session) {
+cJSON* save_session(Session* session){
     cJSON* json_session = cJSON_CreateObject();
-    cJSON_AddItemToObject(json_session, "player", save_character(&session->player));
+    cJSON_AddItemToObject(json_session, "player", save_character(&session->player,session));
     cJSON_AddNumberToObject(json_session, "ID", session->current_ID);
     return json_session;
 }
@@ -100,7 +105,11 @@ void load_session(Session* session){
 
     for(int i = 0; i<PLAYER_SKILLS; i++){
         cJSON* skill = cJSON_GetArrayItem(skills, i);
-        Skills* findSkill = find_skill(session->hash_skills,skill->valuestring);
+        cJSON* name_skill = cJSON_GetObjectItemCaseSensitive(skill, "name");
+        cJSON* uses = cJSON_GetObjectItemCaseSensitive(skill, "uses");
+        Skills* findSkill = find_skill(session->hash_skills, name_skill->valuestring);
+        HashNode* skill_node=find_node(session->hash_skills,name_skill->valuestring);
+        skill_node->uses=uses->valueint;
         if(find_skill==NULL){
             printf(RED"\nSkill NOT found\n");
             return;
