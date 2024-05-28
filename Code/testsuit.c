@@ -76,7 +76,10 @@ void test_json(Session* session){
 // Function to test the combat system
 void test_combat(Session* session) {
     // Load skills and enemies
-    test_json(session);
+    session->hash_skills = create_table_skills();
+    skill_loader(session->hash_skills);
+    enemy_loader(session->enemies,session->hash_skills);
+    scene_loader(session);
 
     // Print available skills
     printf("Available skills:\n");
@@ -143,17 +146,49 @@ void test_combat(Session* session) {
     // Initialize the player character
     Character player;
     strcpy(player.name, "Player");
-    player.hp = 500;
-    player.atk = 50;
-    player.def = 30;
-    player.soul = 0;
-    player.vel = 50;
+
+    printf(GREEN BOLD"What equipment do you choose?\n");
+    printf(CYAN BOLD"\n1. Light Clothing:  500 HP, 80 ATK, 40 DEF, 80 VEL\n");
+    printf(CYAN BOLD"\n2. Steel Armour:  500 HP, 60 ATK, 80 DEF, 50 VEL\n\n"RESET);
+    int outfit;
+    printf(YELLOW BOLD"Enter a valid option: "RESET);
+    scanf("%d", &outfit);
+
+    while (outfit < 1 || outfit > 2) {
+        printf("Please enter a valid option: "RESET);
+        scanf("%d", &outfit);
+    }
+
+    if(outfit == 1){
+        player.hp=500;
+        player.atk=80;
+        player.def=40;
+        player.vel=80;
+        player.soul=0;
+    }
+    else if(outfit == 2){
+        player.hp=500;
+        player.atk=60;
+        player.def=80;
+        player.vel=50;
+        player.soul=0;
+    }
+    else{ //Default settings just in case
+        player.hp=200;
+        player.atk=50;
+        player.def=50;
+        player.vel=0;
+        player.soul=0;
+    }
+
+    printf("\n");
+    
     for (int i = 0; i < 4; i++) {
         player.character_skills[i] = selected_skills[i];
     }
 
     // Start the fight
-    int result = fight(&player, selected_enemy, session);
+    fight(&player, selected_enemy, session);
 }
 
 
