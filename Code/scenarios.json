@@ -1,0 +1,278 @@
+{
+    "scenarios":[
+        {
+            "name": "Cave Base ",
+            "description": "The voice guides you to leave the farm and head towards the first location of the adventure. After a long journey, you encounter a storm and seek shelter.",
+            "ID":0,
+            "decisions":[
+                {
+                    "question":"You enter a cavern.",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "Stay until the storm passes.",
+                            "previous": "Bored because the storm doesn't cease, you make a torch and find drawings on the walls. They remind you of something but you can't recall what. Suddenly, a very strange creature appears, one you've never seen before. You hide behind a rock. The voice orders you to follow the creature, but it hears you move.",
+                            "enemies": [0],
+                            "after": "You venture deeper into the cave.\n\nYou hear metallic sounds coming from further inside. Suddenly, you see a light, purple in hue. You've reached an underground base. The astonishment leaves you with many questions, and you decide to seek information, but be careful: small guards are seen patrolling the area and the machines. In this room, there are dozens and dozens of 2-metre tall cylinders. These are glass and purple, and it's hard to identify what's inside them, but it seems there are figures of inhabitants from the region. All these tubes are connected by a cable that leads to the centre of the underground base where there is a rather noisy machine that retains the energy it extracts from the cylinders."
+                        },
+                        {
+                            "response": "Go deeper inside the cave.",
+                            "previous": "\n",
+                            "enemies": [],
+                            "after": "You venture deeper into the cave.\n\nYou hear metallic sounds coming from further inside. Suddenly, you see a light, purple in hue. You've reached an underground base. The astonishment leaves you with many questions, and you decide to seek information, but be careful: small guards are seen patrolling the area and the machines. In this room, there are dozens and dozens of 2-metre tall cylinders. These are glass and purple, and it's hard to identify what's inside them, but it seems there are figures of inhabitants from the region. All these tubes are connected by a cable that leads to the centre of the underground base where there is a rather noisy machine that retains the energy it extracts from the cylinders."
+                        }
+                    ]
+                },
+                {
+                    "question":"You can continue by two paths.",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "Explore the path to the left and circle around the base.",
+                            "previous": "In the distance, you observe a large room with evil beings inside. It appears to be the command room of the base. You approach it. Guarding the door of the room is a minion. The minion discovers you and sounds the alarm.",
+                            "enemies": [1],
+                            "after": "After the battle, a high-decibel alarm begins to sound. The light in the base dims. You hear a lot of movement; something is happening, and the situation seems out of control. In the distance, you see fire and hear the screeches of some machine."
+                        },
+                        {
+                            "response": "Continue downward to explore the machines up close.",
+                            "previous": "You decide to explore this unseen technology. You want to free these people from the capsules. You head towards the central machine. There are two guards watching. The guards discover you and trigger the alarms.",
+                            "enemies": [0,1],
+                            "after": "After the battle, a high-decibel alarm begins to sound. The light in the base dims. You hear a lot of movement; something is happening, and the situation seems out of control. In the distance, you see fire and hear the screeches of some machine."
+                        }
+                    ]
+                },
+                {
+                    "question":"You must decide whether to flee the base now or try to save the souls of the encapsulated inhabitants.",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "Escape the base.",
+                            "previous": "The path you took earlier is blocked; you need to find another way out. You find a door leading to an underground river through which you believe you can reach the surface.",
+                            "enemies": [3],
+                            "after": "You fight your way out of the disaster in the base. You find yourself in underground waters. Soon after, you hear an explosion and movements in the ground. You have saved yourself, but the lives you could have saved that day will always remain in your memory."
+                        },
+                        {
+                            "response": "Try to save the souls.",
+                            "previous": "You enter the base's command room, where you can free all these souls. In the command room, the release is prevented by the base's commanding general and a minion.",
+                            "enemies": [3,0],
+                            "after": "You open all the capsules in the base. The civilians who were trapped collapse to the ground, none of them able to stand. They are dead. The machine must have sucked out their souls. The trembling ground causes a collapse, and you fall into a dark abyss that seems to have no bottom. Your fall is cushioned by an area of underground waters."
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "name": "Tomb",
+            "description": "You swim to the nearest shore. You feel calm in this space. In the centre, there is a stone wall with ancient inscriptions. Nearby, there appears to be a tomb. As you approach it, you see a set of symbols engraved on it that seem strangely familiar to you.",
+            "ID":1,
+            "decisions":[
+                {
+                    "question":"Are you overcome with curiosity to inspect the tomb?",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "Succumb to curiosity and inspect the wall.",
+                            "previous": "Upon touching the tomb, the stones, chilled by the lack of warmth in the darkness of the area, feel like the touch of desperate souls, souls that have been suffering for centuries. You feel strange and withdraw your hand from the tomb. The voice reproaches you for withdrawing your hand and orders you to place both hands on the tomb. You comply with its request. You feel the same sensation as before, now more intense. It seems you are losing part of your strength. The tomb creaks, and it seems something has awakened. A strong figure emerges from the tomb. It is a soulless being, transparent and weathered by the passage of centuries. You have awakened the warrior spirit of the tomb.",
+                            "enemies": [4],
+                            "after": "Upon defeating the spirit, it realises that you are one of the chosen ones of the prophecy and decides to tell you what you have seen on the mural. The warrior spirit, now weakened and more docile, begins to recite the prophecy written in the ancient inscriptions on the mural:\n\n'When the world falls into darkness and souls are taken by a being of sombre intent, a hero will arise from among the forgotten. This hero, marked by destiny and deprived of their own dreams, must traverse lands and times, facing the shadows of the past and the horrors of the present. Only in the ancient temple, where light and shadow meet, can the power needed to challenge the villain and restore balance be found. The journey will be arduous and full of sacrifices, but the fate of the world and the return of dreams depend on their courage and perseverance.'\n\nThe spirit points to a figure on the mural that represents a temple. This temple is your next destination, where you must go to continue the mission. The being mentioned in the prophecy is called Eternal Darkness Ascendant (EDA), according to the spirit. Subsequently, the warrior spirit blesses you to continue the adventure and not falter along the way. You now embark again on your journey in search of the temple."
+                        },
+                        {
+                            "response": "Resist and leave there.",
+                            "previous": "Despite your fear and distrust, you decide to step away from the mural and leave the cavern. However, the simple act of stepping away has awakened the warrior spirit that rested in the tomb.",
+                            "enemies": [4],
+                            "after": "Upon defeating the spirit, it realises that you are one of the chosen ones of the prophecy and decides to tell you what you have seen on the mural. The warrior spirit, now weakened and more docile, begins to recite the prophecy written in the ancient inscriptions on the mural:\n\n'When the world falls into darkness and souls are taken by a being of sombre intent, a hero will arise from among the forgotten. This hero, marked by destiny and deprived of their own dreams, must traverse lands and times, facing the shadows of the past and the horrors of the present. Only in the ancient temple, where light and shadow meet, can the power needed to challenge the villain and restore balance be found. The journey will be arduous and full of sacrifices, but the fate of the world and the return of dreams depend on their courage and perseverance.'\n\nThe spirit points to a figure on the mural that represents a temple. This temple is your next destination, where you must go to continue the mission. The being mentioned in the prophecy is called Eternal Darkness Ascendant (EDA), according to the spirit. Subsequently, the warrior spirit blesses you to continue the adventure and not falter along the way. You now embark again on your journey in search of the temple."
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "name": "Childhood Village",
+            "description": "You approach a ruined village on your way to the temple. The remnants of houses and buildings, once vibrant and full of life, are now collapsed and overgrown with vegetation. The sky is cloudy, giving the atmosphere a sombre tone. The faint voice in your head reminds you that this was your home, now devastated by the villain in your quest. You still can't distinguish that this was once your home. The village is now wrapped in an eerie silence. The houses, now rubble covered in moss and vines, seem to whisper stories of a forgotten past. You come to a fork in the road: you can head directly to the village centre or take a detour through safer but longer alleys.",
+            "ID":2,
+            "decisions":[
+                {
+                    "question":"Which do you prefer to take?",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "Explore the village centre.",
+                            "previous": "You head to the village centre, where a large plaza seems to be the nucleus of the devastation. There is a collapsed monument that awakens a blurry memory of your childhood. As you examine the monument, an ambush is sprung. A group of the villain's minions emerges from the shadows, surrounding you.",
+                            "enemies": [],
+                            "after": "You find yourself paralysed, surrounded in a moment and unable to do anything. Slowly, you raise your hands. They beat and bind you, taking you to your old home, now turned into an enemy outpost. You wake up tied to a chair in the dark basement of the house, with the faint voice whispering to you that you must stay strong and find a way to escape."
+                        },
+                        {
+                            "response": "Avoid the centre and take the alleys.",
+                            "previous": "You choose to avoid the centre and enter the side alleys. Vague memories assail you as you recognise places where you used to play as a child. Suddenly, in one of the darker alleys, you are ambushed by the villain's minions.",
+                            "enemies": [],
+                            "after": "You find yourself paralysed, surrounded in a moment and unable to do anything. Slowly, you raise your hands. They beat and bind you, taking you to your old home, now turned into an enemy outpost. You wake up tied to a chair in the dark basement of the house, with the faint voice whispering to you that you must stay strong and find a way to escape."
+                        }
+                    ]
+                },
+                {
+                    "question":"How will you escape?",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "Find a tool to cut the ties.",
+                            "previous": "You look around and find a sharp piece of glass on the floor. You use the glass to cut the ropes on your hands and manage to free yourself. Immediately, a guard enters to follow the surveillance protocol.",
+                            "enemies": [1],
+                            "after": "Once free, you prepare to escape the house. You go up the stairs and reach the main hall, where you see old objects from your childhood scattered on the floor. This triggers a series of vivid memories that allow you to recall happy moments of your life before the villain's arrival."
+                        },
+                        {
+                            "response": "Provoke the guards to enter.",
+                            "previous": "You start shouting and making noise, provoking the guards. Two guards enter to silence you. They beat you. The minions get ready to leave the room. Taking advantage of their turned backs, you attack them with your feet, and they fall down.",
+                            "enemies": [1,1],
+                            "after": "Once free, you prepare to escape the house. You go up the stairs and reach the main hall, where you see old objects from your childhood scattered on the floor. This triggers a series of vivid memories that allow you to recall happy moments of your life before the villain's arrival."
+                        }
+                    ]
+                },
+                {
+                    "question":"Do you continue exploring the village for clues?",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "Explore the village for clues.",
+                            "previous": "You explore the village further in search of clues about the villain and his next target. During your search, you find a family diary in one of the collapsed houses. The diary is covered in dust and has yellowed pages from the passage of time. These pages evoke a feeling of nostalgia and sadness. As you read on, you find entries describing discoveries made by your parents about an ancient and mysterious power. On the last page of the book, you see the following note, almost illegible:\n'If you are reading this, it means we have failed to protect you. But do not lose hope. You have a destiny that goes beyond our understanding. You must find the temple; there you will discover your true power and be able to stop the villain.'\nWith tears in your eyes, you leave the room and resume the path to the temple.",
+                            "enemies": [],
+                            "after": ""
+                        },
+                        {
+                            "response": "Find the way to the temple.",
+                            "previous": "TYou choose not to waste time and head towards the path that will lead you to the temple. As you approach the edge of the village, a final patrol of two minions, who have been following you, challenges you to combat.",
+                            "enemies": [1,1],
+                            "after": ""
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "name": "Sacred Temple",
+            "description": "After walking for miles, you are exhausted and sit down. The voice urges you to continue as you must be close. When you push through the vegetation blocking your path, a vast clearing opens up, revealing an enormous ancient structure. The voice indicates that this is the temple mentioned in the writings. You approach the enormous door, which is heavy and creaks. Upon entering, a deep voice from the dark interior pronounces:\n\nWelcome, intrepid traveller, to this sacred place where the whispers of the past dance in the shadows. Here, among the shadows entwined with ethereal light, you will find answers to forgotten questions and truths waiting to be revealed. What do you seek in this place of sepulchral silences and stones aged by history? Do you desire knowledge, or do you seek to redeem the weight of your own uncertainties in the echoes of times past? Before you cross the threshold into the very essence of this temple, you must face the riddles that guard its entrance, three challenges that will test your wit and bravery. Only those worthy of ancient wisdom will unravel the secrets that lie beyond these stone walls. So, traveller, are you prepared to challenge the whispers of the past and face the riddles that await you in this abode of eternity? If so, proceed to the first chamber. By the way, I am the Protector of the Sacred Temple, and I have been guarding it for as long as I can remember. I will not make things easy for you, so beware if you answer a riddle incorrectly. Good luck, adventurer.\n\nYou proceed to the first challenge. In this first chamber, there are three possible paths to continue, each one a response to the riddle. The Protector of the temple appears again:\nHello again, stranger. Here comes your first trial, a simple riddle. As you can see, there are three paths, but only one will lead you to the next level without suffering.\n\nIn the first room of the temple, the protagonist encounters three ancient spirits (Alexander, Bernard, and Cyrus), each playing a different role in the past civilization. One is a guardian of truth who always tells the truth, another is a spirit deceiver who always lies, and the third is a knight who can either lie or tell the truth.\nAlexander says: 'Cyrus is the spirit deceiver'.\nBernard says: 'Alexander is the guardian of the truth'.\nCyrus says: 'I am the knight'.",
+            "ID":3,
+            "decisions":[
+                {
+                    "question":"Who is who?",
+                    "n_options": 3,
+                    "options":[
+                        {
+                            "response": "Alexander is the guardian of the truth, Cyrus is the spirit deceiver, Bernard is the knight.",
+                            "previous": "Correct answer.",
+                            "enemies": [],
+                            "after": "You can advance to the next challenge.\nIn the second room, there are a series of ancient inscriptions on the walls. These inscriptions are part of an ancient prophecy that foretells the coming of a hero. The sequence of these inscriptions forms a code that you must decipher to proceed."
+                        },
+                        {
+                            "response": "Cyrus is the guardian of the truth, Alexander is the spirit deceiver, Bernard is the knight.",
+                            "previous": "Incorrect answer. The correct answer was 1.",
+                            "enemies": [2],
+                            "after": "You can advance to the next challenge.\nIn the second room, there are a series of ancient inscriptions on the walls. These inscriptions are part of an ancient prophecy that foretells the coming of a hero. The sequence of these inscriptions forms a code that you must decipher to proceed."
+                        },
+                        {
+                            "response": "Bernard is the guardian of the truth, Alexander is the spirit deceiver , Cyrus is the knight.",
+                            "previous": "Incorrect answer. The correct answer was 1.",
+                            "enemies": [2],
+                            "after": "You can advance to the next challenge.\nIn the second room, there are a series of ancient inscriptions on the walls. These inscriptions are part of an ancient prophecy that foretells the coming of a hero. The sequence of these inscriptions forms a code that you must decipher to proceed."
+                        }
+                    ]
+                },
+                {
+                    "question":"What number follows the sequence: 1, 11, 21, 1211, 111221, 312211, ___?",
+                    "n_options": 3,
+                    "options":[
+                        {
+                            "response": "13112221",
+                            "previous": "Correct answer.",
+                            "enemies": [],
+                            "after": "You can advance to the next challenge.\nIn the third room, there is an ancient record of combat games between two legendary warriors, Thalor the Valiant and Korrin the Fearless. These games involved betting magical energy, an immaterial currency used in ancient times.\nThalor and Korrin decided to face each other in a series of training battles. They bet 1 magical energy in each game they played. Thalor won three bets and Korrin won 5 magical energies in total."
+                        },
+                        {
+                            "response": "13112321",
+                            "previous": "Incorrect answer. The correct one was 13112321.",
+                            "enemies": [2],
+                            "after": "You can advance to the next challenge.\nIn the third room, there is an ancient record of combat games between two legendary warriors, Thalor the Valiant and Korrin the Fearless. These games involved betting magical energy, an immaterial currency used in ancient times.\nThalor and Korrin decided to face each other in a series of training battles. They bet 1 magical energy in each game they played. Thalor won three bets and Korrin won 5 magical energies in total."
+                        },
+                        {
+                            "response": "13113221",
+                            "previous": "Incorrect answer. The correct one was 13112321.",
+                            "enemies": [2],
+                            "after": "You can advance to the next challenge.\nIn the third room, there is an ancient record of combat games between two legendary warriors, Thalor the Valiant and Korrin the Fearless. These games involved betting magical energy, an immaterial currency used in ancient times.\nThalor and Korrin decided to face each other in a series of training battles. They bet 1 magical energy in each game they played. Thalor won three bets and Korrin won 5 magical energies in total."
+                        }
+                    ]
+                },
+                {
+                    "question":"How many games did they play in total?",
+                    "n_options": 3,
+                    "options":[
+                        {
+                            "response": "8",
+                            "previous": "Incorrect answer. The correct one was 11.\nThe Protector of the Sacred Temple challenges you to a battle to test your level.",
+                            "enemies": [5],
+                            "after": "Having made it this far, you have proven your bravery. The Protector of the Sacred Temple opens an interdimensional portal that leads to the Abyss of Dreams, where Eternal Darkness Ascendant resides. This will be your final step to defeat and save everyone."
+                        },
+                        {
+                            "response": "9",
+                            "previous": "Incorrect answer. The correct one was 11.\nThe Protector of the Sacred Temple challenges you to a battle to test your level.",
+                            "enemies": [5],
+                            "after": "Having made it this far, you have proven your bravery. The Protector of the Sacred Temple opens an interdimensional portal that leads to the Abyss of Dreams, where Eternal Darkness Ascendant resides. This will be your final step to defeat and save everyone."
+                        },
+                        {
+                            "response": "11",
+                            "previous": "Correct answer.\nThe Protector of the Sacred Temple challenges you to a battle to test your level.",
+                            "enemies": [5],
+                            "after": "You have mustered your courage and managed to solve the third and final challenge. The Protector of the Sacred Temple sees something different in you, as if you were the chosen one. Because of this, the Protector will use all his strength to open an interdimensional portal that leads directly to the interior of Eternal Darkness Ascendant's castle, located in the Abyss of Dreams. By crossing this portal, you will take a shortcut to avoid certain enemies."
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "name": "Abyss of Dreams",
+            "description": "You cross the portal in search of saving the inhabitants of this world and fulfilling the prophecy. Upon entering the Abyss of Dreams, you feel as if you are descending through an endless spiral. Gravity seems to fluctuate, making each step uncertain. The terrain is formed from fragments of different realities: pieces of dreamlike landscapes, parts of ancient cities, and elements of the darkest nightmares. The sky, if it can be called that, is a maelstrom of dark colours and shadows. The stolen souls and dreams float around, trapped in ethereal bubbles that reflect their last moments of life and deepest desires.\n\nIn the centre of this chaos stands the villain's fortress, an imposing structure seemingly built from the dreams and nightmares of its victims. The walls are made of a dark, glossy material that appears to absorb light, decorated with reliefs showing scenes of suffering and despair. Twisted towers and spirals rise towards the distorted sky, while the base of the fortress sinks into the abyss, as if rooted in the very heart of darkness. Creatures formed from nightmares roam the abyss, guarding the fortress.",
+            "ID":4,
+            "decisions":[
+                {
+                    "question":"This is the question text",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "If the user has failed the final challenge.",
+                            "previous": "You land safely hundreds of metres from the villain's fortress. The atmosphere in the Abyss of Dreams is oppressive and constantly changing. Due to its exterior structure, the only way to enter the base is through a huge door guarded by one of the villain's generals. The voice calms you before what will be a hard path to defeat the villain.",
+                            "enemies": [3],
+                            "after": "Inside the fortress, the atmosphere is heavy, filled with the dark energy of stolen souls and dreams. The fortress's structure is a labyrinth of dark corridors and vast chambers, each with its own dangers and mysteries. Once inside, you can either face EDA directly or sabotage the energy sources to weaken the enemy."
+                        },
+                        {
+                            "response": "If the user has guessed the final challenge.",
+                            "previous": "You have crossed the portal, descending through the tenebrous abyss and witnessed the majesty of the base, to which the portal has directly led you inside.",
+                            "enemies": [],
+                            "after": "Inside the fortress, the atmosphere is heavy, filled with the dark energy of stolen souls and dreams. The fortress's structure is a labyrinth of dark corridors and vast chambers, each with its own dangers and mysteries. Once inside, you can either face EDA directly or sabotage the energy sources to weaken the enemy."
+                        }
+                    ]
+                },
+                {
+                    "question":"Confront EDA directly or sabotage the energy sources?",
+                    "n_options": 2,
+                    "options":[
+                        {
+                            "response": "Directly attack the throne room.",
+                            "previous": "You decide to head straight to the throne room. There, the powerful Eternal Darkness Ascendant awaits you. The throne room is the heart of the fortress, where the villain resides. It is a vast cavern with a throne made of bones and shadows. Now comes the moment you have fought so hard for throughout your journey. Your adventure culminates in this epic battle.",
+                            "enemies": [6],
+                            "after": "After an exhausting battle, you finally defeat EDA. The stolen souls and dreams begin to be released. The fortress starts to collapse, and you must escape quickly. As you leave the fortress, the Abyss is consumed by absolute chaos and darkness. You fear being trapped in this landscape, but the Warrior Spirit appears to guide you out. Together, you emerge from the Abyss, having reclaimed your own dreams and liberated the trapped souls. You have fulfilled the prophecy and restored hope to the world, now determined to rebuild and protect it from future evils."
+                        },
+                        {
+                            "response": "Sabotage energy sources first.",
+                            "previous": "There are several energy sources scattered throughout the fortress that power the villain's abilities. You can try to sabotage these sources first, weakening the villain before the final confrontation. You reach a tower of the castle, but the dark energy is guarded by two minions whom you must defeat.\nAfter disabling the energy sources, the villain will be weaker. Therefore, you will be able to confront him with greater chances of victory. You will head to the throne room to conclude your adventure in this epic battle.",
+                            "enemies": [1,1,7],
+                            "after": "After an exhausting battle, you finally defeat EDA. The stolen souls and dreams begin to be released. The fortress starts to collapse, and you must escape quickly. As you leave the fortress, the Abyss is consumed by absolute chaos and darkness. You fear being trapped in this landscape, but the Warrior Spirit appears to guide you out. Together, you emerge from the Abyss, having reclaimed your own dreams and liberated the trapped souls. You have fulfilled the prophecy and restored hope to the world, now determined to rebuild and protect it from future evils."
+                        }
+                    ]
+                }
+            ]
+
+        }
+    ]
+}
