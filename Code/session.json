@@ -1,13 +1,13 @@
 {
 	"player":	{
-		"name":	"23",
+		"name":	"gt",
 		"hp":	500,
 		"atk":	80,
 		"def":	40,
 		"vel":	80,
 		"soul":	0,
 		"character_skills":	[{
-				"name":	"Iron Defense",
+				"name":	"Regeneration",
 				"uses":	0
 			}, {
 				"name":	"Soul Infusion",
