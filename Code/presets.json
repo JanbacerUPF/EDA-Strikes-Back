@@ -39,7 +39,7 @@
         {
             "name": "Rapid Assault",
             "description": "Delivers a powerful attack that sacrifices some of your own health to deal greater damage to the enemy.",
-            "effect": "Deals significant damage based on your attack power, but at the cost of your own HP.",
+            "effect": "Deals more ATK, but at the cost of your own HP.",
             "type": 0,
             "hp_mod": -15,
             "atk_mod": 0,
@@ -48,7 +48,7 @@
         {
             "name": "Shield Bash",
             "description": "Bash the enemy with your shield, staggering and damaging them.",
-            "effect": "Deals damage based on your DEF.",
+            "effect": "Deals damage based on your own DEF.",
             "type": 0,
             "hp_mod": 0,
             "atk_mod": 0,
@@ -57,7 +57,7 @@
         {
             "name": "Vital Strike",
             "description": "High-reward attack that has a chance to deal either massive or moderate damage.",
-            "effect": "It has a 50% chance to either inflict a critical hit with very high damage or a regular hit with moderate damage.",
+            "effect": "50% chance of critical hit. 50% chance of weak hit.",
             "type": 0,
             "hp_mod": 0,
             "atk_mod": 0,
@@ -75,7 +75,7 @@
         {
             "name": "Guardian's Shield",
             "description": "Summon a protective shield fueled by your soul energy.",
-            "effect": "Increases HP based on your SOUL energy and DEF.",
+            "effect": "Increases HP based on your SOUL and DEF.",
             "type": 1,
             "hp_mod": 0.5,
             "atk_mod": 0,
@@ -84,7 +84,7 @@
         {
             "name": "Soul Armour",
             "description": "Envelop yourself in a layer of soul energy to bolster your defences.",
-            "effect": "Increases DEF based on your SOUL energy.",
+            "effect": "Increases DEF based on your SOUL.",
             "type": 1,
             "hp_mod": 0,
             "atk_mod": 0,
@@ -93,7 +93,7 @@
         {
             "name": "Soul Infusion",
             "description": "Infuse your weapon with soul energy, empowering your next attack.",
-            "effect": "Increases ATK based on SOUL and ignores the enemy's DEF.",
+            "effect": "Deals ATK based on SOUL and ignores enemy's DEF.",
             "type": 1,
             "hp_mod": 0,
             "atk_mod": 10,
