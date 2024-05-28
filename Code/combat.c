@@ -1,4 +1,5 @@
 #include "Combat.h"
+#include "story.h"
 
 
 // STACK IMPLEMENTATION ------------------------------------------------------------
@@ -289,7 +290,8 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
     for (int i = 0; i < 4; i++) {
         char *color = player->character_skills[i].dmg_type ? MAGENTA : GREEN;
         if (player->character_skills[i].soul_type == 0) {
-            printf(BOLD"%s%d) %s => %s %s\n", color, i + 1, player->character_skills[i].name, RESET, player->character_skills[i].effect);
+            printf(BOLD"%s%d) %s => %s ", color, i + 1, player->character_skills[i].name, RESET);
+            printWrapped(player->character_skills[i].effect);
         } else {
             printf(BOLD"%s%d) %s (%d SOUL) => %s %s\n", color, i + 1, player->character_skills[i].name, SOUL_COST, RESET, player->character_skills[i].effect);
         }

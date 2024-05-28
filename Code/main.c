@@ -144,6 +144,7 @@ void load_session(Session* session){
 
 void play_game(Session* current_game){
     while(current_game->current_scenario->Next!=NULL){
+        save_session_to_file(current_game);
         open_scenario(current_game->current_scenario, current_game);
         int option;
         bool valid_options[2]={false};
@@ -171,6 +172,7 @@ void play_game(Session* current_game){
         }
         current_game->current_ID=current_game->current_scenario->ID;
     }
+    save_session_to_file(current_game);
     open_scenario(current_game->current_scenario, current_game);
     printf("\n\n\n THE GAME IS FINISHED\n");
 
@@ -201,7 +203,7 @@ int menu(){
         printf("*        SELECT AN OPTION       *\n");
         printf("*                               *\n");
         printf("*  1. New Game                  *\n");
-        printf("*  2. Load Game                  *\n");
+        printf("*  2. Load Game                 *\n");
         printf("*  3. Exit Game                 *\n");
         printf("*                               *\n");
         printf("*********************************\n");

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "testsuit.h"
 #include "combat.h"
+#include "story.h"
 
 
 
@@ -73,14 +74,8 @@ void test_json(Session* session){
 }
 
 
-// Function to test the combat system
-void test_combat(Session* session) {
-    // Load skills and enemies
-    session->hash_skills = create_table_skills();
-    skill_loader(session->hash_skills);
-    enemy_loader(session->enemies,session->hash_skills);
-    scene_loader(session);
-
+//Function to easily create a character to perform the tests.
+Character test_character(Session* session){
     // Print available skills
     printf("Available skills:\n");
     int skill_index = 1;
@@ -124,25 +119,6 @@ void test_combat(Session* session) {
         }
     }
 
-    // Let the player choose an enemy
-    printf("Choose an enemy for the fight:\n");
-    for (int i = 0; i < MAX_ENEMIES; i++) {
-        printf("%d: %s\n", i + 1, session->enemies[i].name);
-    }
-
-    int enemy_idx = 0;
-    while (1) {
-        printf("Select enemy: ");
-        if (scanf("%d", &enemy_idx) != 1 || enemy_idx < 1 || enemy_idx > MAX_ENEMIES) {
-            while (getchar() != '\n'); // Clear the input buffer
-            printf("Invalid input. Please enter a number between 1 and %d.\n", MAX_ENEMIES);
-        } else {
-            break;
-        }
-    }
-    Enemy selected_enemy = session->enemies[enemy_idx - 1];
-    printf("Selected Enemy: %s\n", selected_enemy.name);
-
     // Initialize the player character
     Character player;
     strcpy(player.name, "Player");
@@ -182,13 +158,77 @@ void test_combat(Session* session) {
     }
 
     printf("\n");
-    
+
     for (int i = 0; i < 4; i++) {
         player.character_skills[i] = selected_skills[i];
     }
+    return player;
+}
+
+
+// Function to test the combat system
+void test_combat(Session* session) {
+    // Load skills and enemies
+    load_config(session);
+
+    
+
+    // Let the player choose an enemy
+    printf("Choose an enemy for the fight:\n");
+    for (int i = 0; i < MAX_ENEMIES; i++) {
+        printf("%d: %s\n", i + 1, session->enemies[i].name);
+    }
+
+    int enemy_idx = 0;
+    while (1) {
+        printf("Select enemy: ");
+        if (scanf("%d", &enemy_idx) != 1 || enemy_idx < 1 || enemy_idx > MAX_ENEMIES) {
+            while (getchar() != '\n'); // Clear the input buffer
+            printf("Invalid input. Please enter a number between 1 and %d.\n", MAX_ENEMIES);
+        } else {
+            break;
+        }
+    }
+    Enemy selected_enemy = session->enemies[enemy_idx - 1];
+    printf("Selected Enemy: %s\n", selected_enemy.name);
+
+    Character player = test_character(session);
 
     // Start the fight
-    fight(&player, selected_enemy, session);
+    int result = fight(&player, selected_enemy, session);
+}
+
+
+void scenario_test(Session* session){
+
+    load_config(session);
+
+    session->player = test_character(session);
+
+    Scenario* test_scenario = session->first_Scenario;
+    printf("Choose an scenario\n");
+    int i;
+    for(i = 0; i<MAX_SCENARIOS-1; i++){
+        printf("%d) %s\n", i+1, test_scenario->name);
+        test_scenario=test_scenario->Next;
+    }
+    printf("%d) %s\n", i+1, test_scenario->name);
+    int option = 0;
+    while (1) {
+        printf("Select scenario: ");
+        if (scanf("%d", &option) != 1 || option < 1 || option > MAX_SCENARIOS) {
+            while (getchar() != '\n'); // Clear the input buffer
+            printf("Invalid input. Please enter a number between 1 and %d.\n", MAX_SCENARIOS);
+        } else {
+            break;
+        }
+    }
+
+    for(i = MAX_SCENARIOS-option; i>0; i--){
+        test_scenario=test_scenario->Previous;
+    }
+    open_scenario(test_scenario, session);
+
 }
 
 
@@ -198,6 +238,7 @@ void test_menu(){
     while(option!=4){
     printf("1. Test JSON loads\n");
     printf("2. Test combat function\n");
+    printf("3. Test scenario function\n");
     printf("4. EXIT\n");
     printf("Enter a valid option: ");
     scanf("%d",&option);
@@ -207,6 +248,9 @@ void test_menu(){
         }
         else if(option==2){
             test_combat(&test_session);
+        }
+        else if(option==3){
+            scenario_test(&test_session);
         }
     }
 }
