@@ -203,7 +203,7 @@ void scenario_test(Session* session){
 
     load_config(session);
 
-    test_character(session);
+    session->player = test_character(session);
 
     Scenario* test_scenario = session->first_Scenario;
     printf("Choose an scenario\n");
