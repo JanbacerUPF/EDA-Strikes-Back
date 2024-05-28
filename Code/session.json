@@ -1,24 +1,24 @@
 {
 	"player":	{
-		"name":	"jo",
-		"hp":	440,
-		"atk":	80,
-		"def":	40,
-		"vel":	80,
-		"soul":	40,
+		"name":	"fe",
+		"hp":	500,
+		"atk":	60,
+		"def":	80,
+		"vel":	50,
+		"soul":	0,
 		"character_skills":	[{
-				"name":	"Regeneration",
+				"name":	"Rapid Assault",
 				"uses":	0
 			}, {
 				"name":	"Soul Infusion",
 				"uses":	0
 			}, {
-				"name":	"Rapid Assault",
-				"uses":	4
+				"name":	"Soul Armour",
+				"uses":	0
 			}, {
-				"name":	"Berserk Strike",
+				"name":	"Soul Strike",
 				"uses":	0
 			}]
 	},
-	"ID":	1
+	"ID":	0
 }
