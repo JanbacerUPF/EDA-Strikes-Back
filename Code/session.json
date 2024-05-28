@@ -1,5 +1,6 @@
 {
 	"player":	{
+<<<<<<< HEAD
 		"name":	"31",
 		"hp":	500,
 		"atk":	80,
@@ -7,6 +8,27 @@
 		"vel":	80,
 		"soul":	0,
 		"character_skills":	["Regeneration", "Soul Infusion", "Rapid Assault", "Soul Armour"]
+=======
+		"name":	"jo",
+		"hp":	440,
+		"atk":	80,
+		"def":	40,
+		"vel":	80,
+		"soul":	40,
+		"character_skills":	[{
+				"name":	"Regeneration",
+				"uses":	0
+			}, {
+				"name":	"Soul Infusion",
+				"uses":	0
+			}, {
+				"name":	"Rapid Assault",
+				"uses":	4
+			}, {
+				"name":	"Berserk Strike",
+				"uses":	0
+			}]
+>>>>>>> origin/main
 	},
 	"ID":	0
 }
