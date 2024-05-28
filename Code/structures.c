@@ -447,6 +447,7 @@ void load_config(Session* session){
 
 }
 
+/*
 Character character_creation(Session* session){
     printf("Welcome to the character creation\n");
     Character player;
@@ -474,9 +475,8 @@ Character character_creation(Session* session){
             while (node != NULL) {
                 if (!selected[count]) { // Only display non-selected skills
                     skill_map[count] = node;
-                    char *color = node->skill.dmg_type ? MAGENTA : GREEN;
                     //printf("%d: %s => %s\n", count + 1, node->skill.name, node->skill.description);
-                    printf(BOLD"%s%d) %s => %s %s\n", color, count + 1, node->skill.name, RESET, node->skill.description);
+                    printf("%s%d) %s => %s %s\n", BOLD, count + 1, node->skill.name, RESET, node->skill.description);
                 }
                 count++;
                 node = node->next;
@@ -509,7 +509,7 @@ Character character_creation(Session* session){
     
     return player;
 }
-
+*/
 
 Character story_character_creation(Session* session){
     Intro intro= introduction();
@@ -579,8 +579,9 @@ Character story_character_creation(Session* session){
             while (node != NULL) {
                 if (!selected[count]) { // Only display non-selected skills
                     skill_map[count] = node;
+                    char *color = node->skill.dmg_type ? MAGENTA : GREEN;
                     //printf("%d: %s => %s\n", count + 1, node->skill.name, node->skill.description);
-                    printf("%s%d) %s => %s %s\n", BOLD, count + 1, node->skill.name, RESET, node->skill.description);
+                    printf(BOLD"%s%d) %s => %s %s\n", color, count + 1, node->skill.name, RESET, node->skill.description);
                 }
                 count++;
                 node = node->next;
@@ -593,7 +594,7 @@ Character story_character_creation(Session* session){
         }
 
         int option;
-        printf(YELLOW BOLD"Enter a valid option: ");
+        printf(YELLOW BOLD"Enter a valid option: "RESET);
         scanf("%d", &option);
 
         while (option < 1 || option > count || selected[option - 1]) {
