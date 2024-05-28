@@ -143,7 +143,7 @@ void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multipl
         atk = &player->atk;
         def = &player->def;
         soul = &player->soul;
-        max_hp = 500;
+        max_hp = MAX_PLAYER_HP;
     }
 
 
@@ -155,9 +155,9 @@ void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multipl
         *soul -= SOUL_COST;  // The soul skills cost SOUL
     }
 
-
+    // Print HP and/or DEF gained
     int hp_gained = *hp - initial_hp;
-    if (skill->hp_mod != 0 || skill->def_mod != 0 || skill->atk_mod != 0) {
+    if (skill->hp_mod != 0 || skill->def_mod != 0) {
         printf("%s", color);
         if (skill->hp_mod != 0) {
             printf("%.1f HP ", hp_gained);
@@ -170,102 +170,84 @@ void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multipl
 }
 
 
-int calculate_damage(int atk, int def, float multiplier, char* color) {
+void deal_damage(int atk, int def, float multiplier, char* color, int* target_hp) {   
     int damage = fmax(0, multiplier * atk - def);
-    return damage;
-}
-
-
-void apply_damage(int* target_hp, int damage, char* color) {
     *target_hp -= damage;
     if (*target_hp < 0) {
         *target_hp = 0;
     }
     printf("%s%d Damage Dealt%s\n", color, damage, RESET);
+    printf("(%.2f (mult) * %d (atk)) - %d (def) = %.2f (dmg)    TEST PRINT\n", multiplier, atk, def, multiplier * atk - def); // Test print
 }
 
 
 void use_skill(Character* player, Enemy* enemy, Skills* skill, int is_enemy, int time_strike) {
-    int damage = 0;
-    float multiplier; // = is_enemy ? enemy->multiplier_skill : 1.0;
+    float multiplier; 
     char *color;
+    int atk, def;
+    int* target_hp;
 
-
-    if (is_enemy) {
+    if (is_enemy) { // Enemy
         multiplier = enemy->multiplier_skill;
         color = RED;
-    } else {
+        atk = enemy->atk;
+        def = player->def;
+        target_hp = &player->hp;
+    } else { // Player
         multiplier  = time_strike ? 2.0 : 1.0;
         color = BLUE;
+        atk = player->atk;
+        def = enemy->def;
+        target_hp = &enemy->hp;
     }
-
 
     printf("%s%s: ", color, skill->name);
 
-
     if (strcmp(skill->name, "Berserk Strike") == 0) {
-        damage = calculate_damage(is_enemy ? enemy->atk : player->atk, is_enemy ? player->def : enemy->def, multiplier, color);
         apply_effects(player, enemy, skill, multiplier, color, is_enemy);
-        apply_damage(is_enemy ? &player->hp : &enemy->hp, damage, color);
-
+        deal_damage(atk, def, multiplier, color, target_hp);
 
     } else if (strcmp(skill->name, "Iron Defense") == 0) {
         apply_effects(player, enemy, skill, multiplier, color, is_enemy);
 
-
     } else if (strcmp(skill->name, "Regeneration") == 0) {
         apply_effects(player, enemy, skill, multiplier, color, is_enemy);
 
-
     } else if (strcmp(skill->name, "Precision Strike") == 0) {
-        damage = calculate_damage((is_enemy ? enemy->atk : player->atk) * 1.25, is_enemy ? player->def : enemy->def, multiplier, color);
         apply_effects(player, enemy, skill, multiplier, color, is_enemy);
-        apply_damage(is_enemy ? &player->hp : &enemy->hp, damage, color);
-
+        deal_damage(atk * 1.25, def, multiplier, color, target_hp);
 
     } else if (strcmp(skill->name, "Rapid Assault") == 0) {
-        damage = calculate_damage((is_enemy ? enemy->atk : player->atk) * 1.5, is_enemy ? player->def : enemy->def, multiplier, color);
         apply_effects(player, enemy, skill, multiplier, color, is_enemy);
-        apply_damage(is_enemy ? &player->hp : &enemy->hp, damage, color);
-
+        deal_damage(atk * 1.5, def, multiplier, color, target_hp);
 
     } else if (strcmp(skill->name, "Shield Bash") == 0) {
-        damage = calculate_damage((is_enemy ? enemy->atk : player->atk) + 0.5 * (is_enemy ? enemy->def : player->def), is_enemy ? player->def : enemy->def, multiplier, color);
         apply_effects(player, enemy, skill, multiplier, color, is_enemy);
-        apply_damage(is_enemy ? &player->hp : &enemy->hp, damage, color);
-
+        deal_damage(atk + 0.5 * (is_enemy ? enemy->def : player->def), def, multiplier, color, target_hp);
 
     } else if (strcmp(skill->name, "Vital Strike") == 0) {
         float strike_multiplier = (rand() % 2 == 0) ? 2.0 : 0.2;
-        damage = calculate_damage(is_enemy ? enemy->atk : player->atk, is_enemy ? player->def : enemy->def, strike_multiplier * multiplier, color);
         apply_effects(player, enemy, skill, multiplier, color, is_enemy);
-        apply_damage(is_enemy ? &player->hp : &enemy->hp, damage, color);
-
+        deal_damage(atk, def, strike_multiplier * multiplier, color, target_hp);
 
     // Soul Skills -------------------------------------------------------------------------------------
     } else if (strcmp(skill->name, "Soul Strike") == 0 && !is_enemy && player->soul >= SOUL_COST) {
-        damage = calculate_damage(player->atk + player->atk * (player->soul / 100.0), enemy->def, 1.0, color);
         apply_effects(player, enemy, skill, 1, color, is_enemy);
-        apply_damage(&enemy->hp, damage, color);
-
+        deal_damage(atk + atk * (player->soul / 100.0), def, multiplier, color, target_hp);
 
     } else if (strcmp(skill->name, "Guardian's Shield") == 0 && !is_enemy && player->soul >= SOUL_COST) {
         apply_effects(player, enemy, skill, 1, color, is_enemy);
 
-
     } else if (strcmp(skill->name, "Soul Armour") == 0 && !is_enemy && player->soul >= SOUL_COST) {
         apply_effects(player, enemy, skill, 1, color, is_enemy);
 
-
     } else if (strcmp(skill->name, "Soul Infusion") == 0 && !is_enemy && player->soul >= SOUL_COST) {
-        damage = calculate_damage((player->soul / 100.0) * (player->soul / 100.0) * player->atk, enemy->def, 1.0, color);
         apply_effects(player, enemy, skill, 1, color, is_enemy);
-        apply_damage(&enemy->hp, damage, color);
+        deal_damage((player->soul / 100.0) * (player->soul / 100.0) * atk + def, def, multiplier, color, target_hp);
     }
 
-
     printf("%sPlayer HP: ", BLUE);
-    drawProgressBar(player->hp, 500);
+    drawProgressBar(player->hp, MAX_PLAYER_HP);
     printf("%sEnemy HP: ", RED);
     drawProgressBar(enemy->hp, enemy->max_hp);
     printf("%s", RESET);

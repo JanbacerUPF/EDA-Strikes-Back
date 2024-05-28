@@ -5,6 +5,7 @@
 // Define constants
 #include "structures.h"
 #define SOUL_COST 40
+#define MAX_PLAYER_HP 500
 
 
 // Define the StackNode structure
@@ -43,8 +44,7 @@ void view_stats(Character* player, Enemy* enemy);
 
 // Effect and damage functions
 void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multiplier, char* color, int is_enemy);
-int calculate_damage(int atk, int def, float multiplier, char* color);
-void apply_damage(int* target_hp, int damage, char* color);
+void deal_damage(int atk, int def, float multiplier, char* color, int* target_hp);
 
 
 // Skill usage function
