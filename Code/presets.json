@@ -30,7 +30,7 @@
         {
             "name": "Precision Strike",
             "description": "Target the enemy's weak spot for a precise and devastating attack.",
-            "effect": "Ignores a portion of the enemy's DEF; deals bonus damage based on ATK.",
+            "effect": "Ignores a portion of the enemy's DEF; deals bonus ATK.",
             "type": 0,
             "hp_mod": 0,
             "atk_mod": 0,
@@ -39,7 +39,7 @@
         {
             "name": "Rapid Assault",
             "description": "Delivers a powerful attack that sacrifices some of your own health to deal greater damage to the enemy.",
-            "effect": "Deals significant damage based on your attack power, but at the cost of your own health.",
+            "effect": "Deals significant damage based on your attack power, but at the cost of your own HP.",
             "type": 0,
             "hp_mod": -15,
             "atk_mod": 0,
@@ -64,7 +64,7 @@
             "def_mod": 0
         },
         {
-            "name": "Soul Strike",
+            "name": "Soul Strike", 
             "description": "Unleash a powerful strike infused with your soul's energy.",
             "effect": "Deals damage based on ATK and SOUL.",
             "type": 1,
@@ -96,8 +96,8 @@
             "effect": "Increases ATK based on SOUL and ignores the enemy's DEF.",
             "type": 1,
             "hp_mod": 0,
-            "atk_mod": 0,
-            "def_mod": 10
+            "atk_mod": 10,
+            "def_mod": 0
         }
     ],
     "enemies":[
