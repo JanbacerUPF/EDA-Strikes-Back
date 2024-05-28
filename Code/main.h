@@ -2,7 +2,7 @@
 #include "story.h"
 #include "testsuit.h"
 
-#define TEST_CODE 69420
+#define TEST_CODE 7357
 #define NEW_GAME 1
 #define LOAD_GAME 2
 #define EXIT 3

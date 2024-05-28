@@ -14,26 +14,54 @@ void swap(Enemy* a, Enemy* b) {
 
 
 // Partition function for Quick Sort
-int partition(Enemy enemies[], int low, int high) {
-    int pivot = enemies[high].atk;
-    int i = (low - 1);
-    for (int j = low; j < high; j++) {
-        if (enemies[j].atk < pivot) {
-            i++;
-            swap(&enemies[i], &enemies[j]);
-        }
+int partition(Enemy enemies[], int low, int high, int type) {
+    int pivot;
+    int i;
+    switch (type){
+        case 0:
+            pivot = enemies[high].hp;
+            i = (low - 1);
+            for (int j = low; j < high; j++) {
+                if (enemies[j].hp < pivot) {
+                    i++;
+                    swap(&enemies[i], &enemies[j]);
+                }
+            }
+            swap(&enemies[i + 1], &enemies[high]);
+            return (i + 1);
+        case 1:
+            pivot = enemies[high].atk;
+            i = (low - 1);
+            for (int j = low; j < high; j++) {
+                if (enemies[j].atk < pivot) {
+                    i++;
+                    swap(&enemies[i], &enemies[j]);
+                }
+            }
+            swap(&enemies[i + 1], &enemies[high]);
+            return (i + 1);
+        case 2:
+            pivot = enemies[high].def;
+            i = (low - 1);
+            for (int j = low; j < high; j++) {
+                if (enemies[j].def < pivot) {
+                    i++;
+                    swap(&enemies[i], &enemies[j]);
+                }
+            }
+            swap(&enemies[i + 1], &enemies[high]);
+            return (i + 1);
     }
-    swap(&enemies[i + 1], &enemies[high]);
-    return (i + 1);
+    
 }
 
 
 // Quick Sort function
-void quickSort(Enemy enemies[], int low, int high) {
+void quickSort(Enemy enemies[], int low, int high, int type) {
     if (low < high) {
-        int pi = partition(enemies, low, high);
-        quickSort(enemies, low, pi - 1);
-        quickSort(enemies, pi + 1, high);
+        int pi = partition(enemies, low, high, type);
+        quickSort(enemies, low, pi - 1, type);
+        quickSort(enemies, pi + 1, high, type);
     }
 }
 
@@ -46,17 +74,16 @@ void test_json(Session* session){
     for (int i = 0; i < MAX_SKILLS; i++) {
         HashNode* node = session->hash_skills->table[i];
         while (node != NULL) {          
-            //printf("%d: %s => %s\n", count + 1, node->skill.name, node->skill.description);
             printf("%sLoaded Skill: %s %s\n",GREEN BOLD,RESET, node->skill.name);
             node = node->next;
         }
     }
     printf(RED UNDERLINE BOLD"\nLOADING ENEMIES\n"RESET);
     enemy_loader(session->enemies,session->hash_skills);
-    //quickSort(session->enemies,0,MAX_ENEMIES-1);
+    
     for(int i = 0; i<MAX_ENEMIES; i++){
         printf("%sLoaded Enemie: %s %s\n",GREEN BOLD,RESET, session->enemies[i].name);
-        printf(BLUE BOLD"  ATK:%d DEF:%d HP:%d\n"RESET,session->enemies[i].atk,session->enemies[i].def,session->enemies[i].hp);
+        printf(BLUE BOLD"   ATK:%d DEF:%d HP:%d\n"RESET,session->enemies[i].atk,session->enemies[i].def,session->enemies[i].hp);
     }
 
     printf(RED UNDERLINE BOLD"\nLOADING SCENARIOS\n"RESET);
@@ -171,24 +198,54 @@ void test_combat(Session* session) {
     // Load skills and enemies
     load_config(session);
 
-    
-
-    // Let the player choose an enemy
-    printf("Choose an enemy for the fight:\n");
-    for (int i = 0; i < MAX_ENEMIES; i++) {
-        printf("%d: %s\n", i + 1, session->enemies[i].name);
-    }
-
     int enemy_idx = 0;
-    while (1) {
-        printf("Select enemy: ");
-        if (scanf("%d", &enemy_idx) != 1 || enemy_idx < 1 || enemy_idx > MAX_ENEMIES) {
-            while (getchar() != '\n'); // Clear the input buffer
-            printf("Invalid input. Please enter a number between 1 and %d.\n", MAX_ENEMIES);
-        } else {
-            break;
+    int counter = 0;
+     
+
+    while(1){
+        int shouldBreak = 0; // Flag to indicate whether to break
+        quickSort(session->enemies,0,MAX_ENEMIES-1,counter % 3);
+        // Let the player choose an enemy
+        printf(RED UNDERLINE BOLD"\n\nChoose an enemy for the fight:\n"RESET);
+        printf(BOLD"0: Ordered (from lowest to highest) by "RESET);
+            switch (counter % 3) {
+                case 0:
+                    printf(GREEN BOLD"hp "RESET);
+                    break;
+                case 1:
+                    printf(GREEN BOLD"atk "RESET);
+                    break;
+                case 2:
+                    printf(GREEN BOLD"def "RESET);
+                    break;
+            }
+        printf(BOLD"(toggle)\n"RESET);
+        for (int i = 0; i < MAX_ENEMIES; i++) {
+            printf(BOLD"%d: %s\n"RESET, i + 1, session->enemies[i].name);
+            printf(BLUE BOLD"   ATK:%d DEF:%d HP:%d\n"RESET,session->enemies[i].atk,session->enemies[i].def,session->enemies[i].hp);
+        }
+
+        
+        while (1) {
+            printf("Select enemy: ");
+            scanf("%d", &enemy_idx);
+            if(enemy_idx==0){
+                counter++;
+                break;
+            }
+            else if (enemy_idx < 1 || enemy_idx > MAX_ENEMIES) {
+                while (getchar() != '\n'); // Clear the input buffer
+                printf("Invalid input. Please enter a number between 1 and %d.\n", MAX_ENEMIES);
+            } else {
+                shouldBreak = 1;
+                break;
+            }
+        }
+        if (shouldBreak==1) {
+            break; // Break the outer loop if the flag is set
         }
     }
+    
     Enemy selected_enemy = session->enemies[enemy_idx - 1];
     printf("Selected Enemy: %s\n", selected_enemy.name);
 
