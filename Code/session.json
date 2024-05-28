@@ -1,12 +1,12 @@
 {
 	"player":	{
-		"name":	"Josep",
-		"hp":	155,
+		"name":	"31",
+		"hp":	500,
 		"atk":	80,
 		"def":	40,
 		"vel":	80,
-		"soul":	40,
-		"character_skills":	["Regeneration", "Soul Infusion", "Rapid Assault", "Berserk Strike"]
+		"soul":	0,
+		"character_skills":	["Regeneration", "Soul Infusion", "Rapid Assault", "Soul Armour"]
 	},
-	"ID":	1
+	"ID":	0
 }
