@@ -332,7 +332,7 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
     } else if (player->character_skills[skill_idx - 1].type == 1 && player->soul < SOUL_COST) { // Not enough SOUL
         printf("Not enough SOUL\n");
         player_turn(player, enemy, session, skill_stack, time_strike_used);
-    } else if (skill_idx >= 1 && skill_idx <= 4) { // valid skill
+    } else if (skill_idx >= 1 && skill_idx <= 4) { // Valid skill
         use_skill(player, enemy, &player->character_skills[skill_idx - 1], 0, 0);
         push(skill_stack, &player->character_skills[skill_idx - 1]); // Push used skill onto stack
         HashNode* skill_node = find_node(session->hash_skills, player->character_skills[skill_idx - 1].name);
