@@ -31,6 +31,16 @@ Skills* get_kth_skill(StackNode* top, int k) {
     return (current != NULL) ? current->skill : NULL;
 }
 
+int stack_size(StackNode* top) {
+    int size = 0;
+    StackNode* current = top;
+    while (current != NULL) {
+        size++;
+        current = current->next;
+    }
+    return size;
+}
+
 
 // QUEUE IMPLEMENTATION ---------------------------------------------------------------------
 // Function to create a new node
@@ -175,15 +185,17 @@ void apply_damage(int* target_hp, int damage, char* color) {
 }
 
 
-void use_skill(Character* player, Enemy* enemy, Skills* skill, int is_enemy) {
+void use_skill(Character* player, Enemy* enemy, Skills* skill, int is_enemy, int time_strike) {
     int damage = 0;
-    float multiplier = is_enemy ? enemy->multiplier_skill : 1.0;
+    float multiplier; // = is_enemy ? enemy->multiplier_skill : 1.0;
     char *color;
 
 
     if (is_enemy) {
+        multiplier = enemy->multiplier_skill;
         color = RED;
     } else {
+        multiplier  = time_strike ? 2.0 : 1.0;
         color = BLUE;
     }
 
@@ -321,25 +333,25 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
 
 
     // Check if the skill is one of the character's skills
-    if (skill_idx == 0) { // view stats
+    if (skill_idx == 0) { // View stats
         view_stats(player, enemy);
         player_turn(player, enemy, session, skill_stack, time_strike_used);
     } else if (skill_idx == 5) { // Time Strike
-        int k = rand() % 5; // Randomly select k
+        int k = stack_size(*skill_stack) ? rand() % stack_size(*skill_stack) : -1; // Randomly select k
         Skills* selected_skill = get_kth_skill(*skill_stack, k);
         if (selected_skill != NULL) {
             printf("Time Strike activates: Reusing %s with double power!\n", selected_skill->name);
-            use_skill(player, enemy, selected_skill, 0);
+            use_skill(player, enemy, selected_skill, 0, 1);
             *time_strike_used = 1; // Mark Time Strike as used
         } else {
             printf("No previous skills to reuse.\n");
             player_turn(player, enemy, session, skill_stack, time_strike_used);
         }
-    } else if (player->character_skills[skill_idx - 1].type == 1 && player->soul < SOUL_COST) { // not enough SOUL
+    } else if (player->character_skills[skill_idx - 1].type == 1 && player->soul < SOUL_COST) { // Not enough SOUL
         printf("Not enough SOUL\n");
         player_turn(player, enemy, session, skill_stack, time_strike_used);
     } else if (skill_idx >= 1 && skill_idx <= 4) { // valid skill
-        use_skill(player, enemy, &player->character_skills[skill_idx - 1], 0);
+        use_skill(player, enemy, &player->character_skills[skill_idx - 1], 0, 0);
         push(skill_stack, &player->character_skills[skill_idx - 1]); // Push used skill onto stack
         HashNode* skill_node = find_node(session->hash_skills, player->character_skills[skill_idx - 1].name);
         skill_node->uses++;
@@ -350,7 +362,7 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
 
 void enemy_turn(Character* player, Enemy* enemy) {
     printf("%s%s's Turn\n", RED, enemy->name);
-    use_skill(player, enemy, &enemy->skills[rand() % 4], 1); // Choose a skill at random
+    use_skill(player, enemy, &enemy->skills[rand() % 4], 1, 0); // Choose a skill at random
     printf("\n");
 }
 
