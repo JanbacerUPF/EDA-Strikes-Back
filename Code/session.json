@@ -1,0 +1,24 @@
+{
+	"player":	{
+		"name":	"ef",
+		"hp":	500,
+		"atk":	80,
+		"def":	40,
+		"vel":	80,
+		"soul":	0,
+		"character_skills":	[{
+				"name":	"Rapid Assault",
+				"uses":	0
+			}, {
+				"name":	"Soul Strike",
+				"uses":	0
+			}, {
+				"name":	"Vital Strike",
+				"uses":	0
+			}, {
+				"name":	"Soul Infusion",
+				"uses":	0
+			}]
+	},
+	"ID":	0
+}
