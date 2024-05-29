@@ -178,9 +178,19 @@ void play_game(Session* current_game){
         }
         current_game->current_ID=current_game->current_scenario->ID;
     }
-    save_session_to_file(current_game);
-    open_scenario(current_game->current_scenario, current_game);
-    printf("\n\n\n THE GAME IS FINISHED\n");
+    while(1){
+        save_session_to_file(current_game);
+        int result=open_scenario(current_game->current_scenario, current_game);
+        if(result==1){
+            load_session(current_game);
+            continue;
+        }
+        else{
+            break;
+        }
+    }
+    
+    printf(GREEN UNDERLINE BOLD"\n\n\n THE GAME IS FINISHED, THANK YOU FOR PLAYING\n");
 }
 
 void new_game(){
