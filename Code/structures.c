@@ -537,14 +537,14 @@ Character story_character_creation(Session* session){
     outfit=input_integer("Enter a valid option: ",1,2);
 
     if(outfit == 1){
-        player.hp=450;
+        player.hp=500;
         player.atk=80;
         player.def=40;
         player.vel=80;
         player.soul=0;
     }
     else if(outfit == 2){
-        player.hp=450;
+        player.hp=500;
         player.atk=60;
         player.def=80;
         player.vel=50;
