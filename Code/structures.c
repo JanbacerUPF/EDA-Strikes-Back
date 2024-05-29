@@ -1,5 +1,6 @@
 #include "structures.h"
 #include "story.h"
+#include "main.h"
 
 //Dictionary of skills
 unsigned int hash(char *str) {
@@ -533,13 +534,7 @@ Character story_character_creation(Session* session){
     printf(CYAN BOLD"\n1. Light Clothing:  500 HP, 80 ATK, 40 DEF, 80 VEL\n");
     printf(CYAN BOLD"\n2. Steel Armour:  500 HP, 60 ATK, 80 DEF, 50 VEL\n\n"RESET);
     int outfit;
-    printf(YELLOW BOLD"Enter a valid option: "RESET);
-    scanf("%d", &outfit);
-
-    while (outfit < 1 || outfit > 2) {
-        printf("Please enter a valid option: "RESET);
-        scanf("%d", &outfit);
-    }
+    outfit=input_integer("Enter a valid option: ",1,2);
 
     if(outfit == 1){
         player.hp=500;
@@ -569,7 +564,7 @@ Character story_character_creation(Session* session){
     bool selected[MAX_SKILLS] = { false };  // Array to keep track of selected skills
     printf(RESET"Before starting your journey traveler, tell me, what skills make you special? \n");
     for (int i = 0; i < PLAYER_SKILLS; i++) {
-        printf(GREEN UNDERLINE BOLD"\nChoose the player's skills: \n"RESET);
+        printf(BLUE UNDERLINE BOLD"\nChoose the player's skills: \n"RESET);
 
         int count = 0;
         HashNode* skill_map[MAX_SKILLS] = { 0 }; // Array to map displayed options to hash table nodes
@@ -580,8 +575,7 @@ Character story_character_creation(Session* session){
                 if (!selected[count]) { // Only display non-selected skills
                     skill_map[count] = node;
                     char *color = node->skill.dmg_type ? MAGENTA : GREEN;
-                    //printf("%d: %s => %s\n", count + 1, node->skill.name, node->skill.description);
-                    printf(BOLD"%s%d) %s => %s %s\n", color, count + 1, node->skill.name, RESET, node->skill.description);
+                    printf("%s%s%d) %s => %s %s\n", color,BOLD, count + 1, node->skill.name, RESET, node->skill.description);
                 }
                 count++;
                 node = node->next;
@@ -594,12 +588,12 @@ Character story_character_creation(Session* session){
         }
 
         int option;
-        printf(YELLOW BOLD"Enter a valid option: "RESET);
-        scanf("%d", &option);
+        option=input_integer("Enter a valid option: ",1,count);
 
-        while (option < 1 || option > count || selected[option - 1]) {
-            printf("Please enter a valid option: ");
-            scanf("%d", &option);
+
+        while (selected[option - 1]) {
+            printf("Please enter a valid option\n");
+            option=input_integer("Enter a valid option: ",1,count);
         }
 
         selected[option - 1] = true; // Mark the selected skill as chosen
@@ -613,5 +607,25 @@ Character story_character_creation(Session* session){
     }
     
     return player;
+}
+
+
+
+int input_integer(char* message, int min, int max){
+    int num;
+    char term;
+    printf(YELLOW BOLD"\n%s"RESET, message);
+    while (1) {
+        if (scanf("%d%c", &num, &term) != 2 || term != '\n') {
+            printf(RED BOLD"\nEnter a valid integer:"RESET);
+            while ((getchar()) != '\n'); // Clear the input buffer
+        }else if (num < min || num > max) {
+            printf(RED BOLD"\nEnter an integer between %d and %d:"RESET, min, max);
+        } else {
+            break; // Valid integer within range
+        }
+    }
+    
+    return num;
 }
 

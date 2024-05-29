@@ -10,3 +10,5 @@
 void save_session_to_file(Session* session);
 
 void play_game(Session* current_game);
+
+int menu();

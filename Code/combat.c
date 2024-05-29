@@ -290,25 +290,21 @@ void player_turn(Character* player, Enemy* enemy, Session* session, StackNode** 
     for (int i = 0; i < 4; i++) {
         char *color = player->character_skills[i].dmg_type ? MAGENTA : GREEN;
         if (player->character_skills[i].soul_type == 0) {
-            printf(BOLD"%s%d) %s => %s ", color, i + 1, player->character_skills[i].name, RESET);
+            printf("%s%s%d) %s => %s ", color,BOLD, i + 1, player->character_skills[i].name, RESET);
             printWrapped(player->character_skills[i].effect);
         } else {
-            printf(BOLD"%s%d) %s (%d SOUL) => %s %s\n", color, i + 1, player->character_skills[i].name, SOUL_COST, RESET, player->character_skills[i].effect);
+            printf("%s%s%d) %s (%d SOUL) => %s %s\n", color,BOLD, i + 1, player->character_skills[i].name, SOUL_COST, RESET, player->character_skills[i].effect);
         }
     }
     // Display Time Strike if not used
     if (!(*time_strike_used)) {
-        printf(BOLD"5) Time Strike => Reuse a previous skill with double power%s\n", RESET);
+        printf(CYAN BOLD"5) Time Strike => Reuse a previous skill with double power%s\n", RESET);
     }
 
 
     while (!valid_input) {
-        printf("Choose a skill: ");
-        if (scanf("%d", &skill_idx) != 1) {
-            // If scanf() does not read an integer, clear the input buffer
-            while (getchar() != '\n');
-            printf("Invalid input\n");
-        } else if (skill_idx < 0 || skill_idx > 5 || (skill_idx == 5 && *time_strike_used)) {
+        skill_idx=input_integer("Choose a skill: ",0,5);
+        if (skill_idx < 0 || skill_idx > 5 || (skill_idx == 5 && *time_strike_used)) {
             printf("Invalid choice\n");
         } else {
             valid_input = 1;
@@ -366,7 +362,7 @@ int fight(Character* player, Enemy enemy, Session* session) {
 
 
     for (int i = 0; i < enemy.turns; i++) {
-        printf("%s Turn %d/%d %s\n", INVERT, i + 1, enemy.turns, RESET);
+        printf("\n%s Turn %d/%d %s\n\n", INVERT, i + 1, enemy.turns, RESET);
         if (dequeue(q) == 0) { // PLAYER TURN
             player->soul += (player->soul <= 100) ? 10 : 0; // Add 10 SOUL each turn
             printf("SOUL AVAILABLE: %d\n", player->soul);

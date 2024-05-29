@@ -157,6 +157,7 @@ Skills* find_skill(HashTable* hashTable, char* name);
 HashNode* find_node(HashTable* hashTable, char* name);
 
 
+int input_integer(char* message, int min, int max);
 
 
 #endif 

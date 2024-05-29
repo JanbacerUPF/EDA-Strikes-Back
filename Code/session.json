@@ -1,33 +1,24 @@
 {
 	"player":	{
-		"name":	"Jiji",
+		"name":	"Josep",
 		"hp":	500,
-		"atk":	80,
+		"atk":	80000,
 		"def":	40,
 		"vel":	80,
 		"soul":	0,
 		"character_skills":	[{
-				"name":	"Soul Armour",
+				"name":	"Regeneration",
 				"uses":	0
 			}, {
-				"name":	"Soul Strike",
+				"name":	"Soul Infusion",
 				"uses":	0
 			}, {
-				"name":	"Vital Strike",
+				"name":	"Rapid Assault",
 				"uses":	0
 			}, {
-				"name":	"Shield Bash",
-				"uses":	0
-			}, {
-				"name":	"Soul Strike",
-				"uses":	0
-			}, {
-				"name":	"Vital Strike",
-				"uses":	0
-			}, {
-				"name":	"Shield Bash",
+				"name":	"Berserk Strike",
 				"uses":	0
 			}]
 	},
-	"ID":	0
+	"ID":	4
 }
