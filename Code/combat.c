@@ -129,7 +129,7 @@ void drawProgressBar(int current, int max) {
 
 
 void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multiplier, char* color, int is_enemy) {
-    int *hp, *def, *atk, *soul;
+    int *hp, *def, *atk;
     int max_hp;
 
 
@@ -137,13 +137,11 @@ void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multipl
         hp = &enemy->hp;
         atk = &enemy->atk;
         def = &enemy->def;
-        soul = NULL;
         max_hp = enemy->max_hp;
     } else {
         hp = &player->hp;
         atk = &player->atk;
         def = &player->def;
-        soul = &player->soul;
         max_hp = MAX_PLAYER_HP;
     }
 
@@ -152,9 +150,6 @@ void apply_effects(Character* player, Enemy* enemy, Skills* skill, float multipl
     *hp = fmin(max_hp, *hp + multiplier * skill->hp_mod);
     *def += multiplier * skill->def_mod;
     *atk += multiplier * skill->atk_mod;
-    if (soul && skill->soul_type) {
-        *soul -= SOUL_COST;  // The soul skills cost SOUL
-    }
 
     // Print HP and/or DEF gained
     int hp_gained = *hp - initial_hp;
@@ -244,7 +239,11 @@ void use_skill(Character* player, Enemy* enemy, Skills* skill, int is_enemy, int
 
     } else if (strcmp(skill->name, "Soul Infusion") == 0 && !is_enemy && player->soul >= SOUL_COST) {
         apply_effects(player, enemy, skill, 1, color, is_enemy);
-        deal_damage((player->soul / 100.0) * (player->soul / 100.0) * atk + def, def, multiplier, color, target_hp);
+        deal_damage(((player->soul / 100.0) * (player->soul / 100.0) * atk) + def, def, multiplier, color, target_hp);
+    }
+
+    if (player->soul && skill->soul_type) {
+        player->soul -= SOUL_COST;  // The soul skills cost SOUL
     }
 
     printf("%sPlayer HP: ", BLUE);

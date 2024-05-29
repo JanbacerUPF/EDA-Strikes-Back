@@ -1,6 +1,6 @@
 {
 	"player":	{
-		"name":	"Hero",
+		"name":	"Player",
 		"hp":	500,
 		"atk":	80,
 		"def":	40,
@@ -10,13 +10,13 @@
 				"name":	"Regeneration",
 				"uses":	0
 			}, {
+				"name":	"Soul Infusion",
+				"uses":	0
+			}, {
 				"name":	"Rapid Assault",
 				"uses":	0
 			}, {
-				"name":	"Vital Strike",
-				"uses":	0
-			}, {
-				"name":	"Berserk Strike",
+				"name":	"Soul Armour",
 				"uses":	0
 			}]
 	},
