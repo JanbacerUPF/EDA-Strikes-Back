@@ -220,7 +220,7 @@ void test_combat(Session* session) {
 
         
         while (1) {
-            enemy_idx=input_integer("Select enemy: ",1,MAX_ENEMIES);
+            enemy_idx=input_integer("Select enemy: ",0,MAX_ENEMIES);
             if(enemy_idx==0){
                 counter++;
                 break;

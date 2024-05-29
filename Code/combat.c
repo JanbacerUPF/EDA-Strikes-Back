@@ -173,7 +173,7 @@ void deal_damage(int atk, int def, float multiplier, char* color, int* target_hp
         *target_hp = 0;
     }
     printf("%s%d Damage Dealt%s\n", color, damage, RESET);
-    printf("(%.2f (mult) * %d (atk)) - %d (def) = %.2f (dmg)    TEST PRINT\n", multiplier, atk, def, multiplier * atk - def); // Test print
+    //printf("(%.2f (mult) * %d (atk)) - %d (def) = %.2f (dmg)    TEST PRINT\n", multiplier, atk, def, multiplier * atk - def); // Test print
 }
 
 
