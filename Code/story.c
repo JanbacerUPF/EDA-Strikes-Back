@@ -133,7 +133,7 @@ void printWrapped(const char *str) {
 }
 
 
-void open_scenario(Scenario* scenario, Session* session){
+int open_scenario(Scenario* scenario, Session* session){
     printf(CLEAR_SCREEN); 
     
     printf("\n\n\n");
@@ -148,17 +148,21 @@ void open_scenario(Scenario* scenario, Session* session){
                 printf(GREEN BOLD  "%d. %s\n\n" RESET, j+1, scenario->decisions[i].options[j].response);
             }
             int option;
-            printf("Enter your option: ");
-            scanf("%d",&option);
+            option=input_integer("Enter your option: ",1,scenario->decisions[i].options_number);
             option--;
             //printf("\n%s\n",scenario->decisions[i].options[option].previous_narrative);
             printf("\n");
             printWrapped(scenario->decisions[i].options[option].previous_narrative);
             sleep(3); // 5-second delay
-            printf(CLEAR_SCREEN); 
+            int win_num;
             for(int j = 0; j<scenario->decisions[i].options[option].en_num;j++){
                 printf(RED BOLD "\n//  BATTLE AGAINST %s  //\n" RESET, scenario->decisions[i].options[option].enemies[j].name);
-                int win_num=fight(&session->player, scenario->decisions[i].options[option].enemies[j], session);   
+                win_num=fight(&session->player, scenario->decisions[i].options[option].enemies[j], session);   
+            }
+            if(win_num==1){
+                printf("Restarting scenario...\n");
+                sleep(1);
+                return win_num;
             }
             //printf("\n%s\n",scenario->decisions[i].options[option].after_narrative);
             printf("\n");
@@ -169,7 +173,6 @@ void open_scenario(Scenario* scenario, Session* session){
     else{
         printf("You retrace your steps, only to hear a familiar voice echo in your mind: \"You've already been here. Why are we stopping? We can't afford to waste any time. Move forward and continue your journey.\"\n");
     }
-   
-
+    return 0;
 }
 

@@ -1,6 +1,6 @@
 #include "structures.h"
 
-void open_scenario(Scenario* scenario, Session* session);
+int open_scenario(Scenario* scenario, Session* session);
 
 Intro introduction();
 

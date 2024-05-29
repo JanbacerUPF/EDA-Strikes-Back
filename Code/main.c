@@ -1,5 +1,8 @@
 #include "main.h"
 
+
+
+
 // Function to save Character (name, attributes, and skill names)
 cJSON* save_character(Character* character, Session* session) {
     cJSON* json_character = cJSON_CreateObject();
@@ -145,7 +148,11 @@ void load_session(Session* session){
 void play_game(Session* current_game){
     while(current_game->current_scenario->Next!=NULL){
         save_session_to_file(current_game);
-        open_scenario(current_game->current_scenario, current_game);
+        int result=open_scenario(current_game->current_scenario, current_game);
+        if(result==1){
+            load_session(current_game);
+            continue;
+        }
         int option;
         bool valid_options[2]={false};
         if(current_game->current_scenario->Next!=NULL){
@@ -156,12 +163,11 @@ void play_game(Session* current_game){
             valid_options[1]=true;
             printf("2. Go back to the previous scenario\n");
         }
-        printf("Enter your option: ");
-        scanf("%d",&option);
+        option=input_integer("Enter your option: ",1,2);
         option--;
-        while(option<0 || option>2 || valid_options[option]==false){
+        while(valid_options[option]==false){
             printf("You can't do that at the moment, please enter a valid option: ");
-            scanf("%d",&option);
+            option=input_integer("Enter your option: ",1,2);
             option--;
         }
         if(option==0){
@@ -172,10 +178,19 @@ void play_game(Session* current_game){
         }
         current_game->current_ID=current_game->current_scenario->ID;
     }
-    save_session_to_file(current_game);
-    open_scenario(current_game->current_scenario, current_game);
-    printf("\n\n\n THE GAME IS FINISHED\n");
-
+    while(1){
+        save_session_to_file(current_game);
+        int result=open_scenario(current_game->current_scenario, current_game);
+        if(result==1){
+            load_session(current_game);
+            continue;
+        }
+        else{
+            break;
+        }
+    }
+    
+    printf(GREEN UNDERLINE BOLD"\n\n\n THE GAME IS FINISHED, THANK YOU FOR PLAYING\n");
 }
 
 void new_game(){
@@ -210,9 +225,8 @@ int menu(){
         printf(YELLOW BOLD"|  "GREEN"3. Exit Game"YELLOW BOLD"                 |\n"RESET);
         printf(YELLOW BOLD"|                               |\n"RESET);
         printf(YELLOW BOLD"---------------------------------\n"RESET);
-        printf(BOLD"Enter your choice: "RESET);
-        scanf("%d",&option);
-        while((getchar()) != '\n');
+        option=input_integer("Enter your choice: ",NEW_GAME,TEST_CODE);
+        //while((getchar()) != '\n');
         if(option==NEW_GAME){
             printf("Starting a New Game...\n\n\n");
             sleep(2);

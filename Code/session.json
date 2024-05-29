@@ -8,6 +8,7 @@
 		"soul":	0,
 		"character_skills":	[{
 				"name":	"Regeneration",
+				"name":	"Regeneration",
 				"uses":	0
 			}, {
 				"name":	"Soul Infusion",

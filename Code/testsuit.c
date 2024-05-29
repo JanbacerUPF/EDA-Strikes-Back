@@ -104,12 +104,13 @@ void test_json(Session* session){
 //Function to easily create a character to perform the tests.
 Character test_character(Session* session){
     // Print available skills
-    printf("Available skills:\n");
+    printf("\nAvailable skills:\n");
     int skill_index = 1;
     for (int i = 0; i < MAX_SKILLS; i++) {
         HashNode* node = session->hash_skills->table[i];
         while (node != NULL) {
-            printf("%d: %s => %s\n", skill_index, node->skill.name, node->skill.description);
+            char *color = node->skill.dmg_type ? MAGENTA : GREEN;
+            printf("%s%s%d: %s =>%s %s\n",color,BOLD, skill_index, node->skill.name, RESET,node->skill.description);
             node = node->next;
             skill_index++;
         }
@@ -121,29 +122,27 @@ Character test_character(Session* session){
     int skill_count = 0;
 
     while (skill_count < 4) {
-        int skill_idx = 0;
-        printf("Select skill %d: ", skill_count + 1);
-        if (scanf("%d", &skill_idx) != 1 || skill_idx < 1 || skill_idx > MAX_SKILLS) {
-            while (getchar() != '\n'); // Clear the input buffer
-            printf("Invalid input. Please enter a number between 1 and %d.\n", skill_index - 1);
-        } else {
-            // Find the skill in the hash table
-            int current_index = 1;
-            for (int i = 0; i < MAX_SKILLS; i++) {
-                HashNode* node = session->hash_skills->table[i];
-                while (node != NULL) {
-                    if (current_index == skill_idx) {
-                        selected_skills[skill_count] = node->skill;
-                        printf("Selected Skill: %s\n", node->skill.name);
-                        skill_count++;
-                        node = NULL; // Break out of the inner loop
-                    } else {
-                        node = node->next;
-                    }
-                    current_index++;
+        char message[50];  // Adjust the size as necessary
+        snprintf(message, sizeof(message), "Select skill %d: ", skill_count + 1);
+        int skill_idx = input_integer(message,1,MAX_SKILLS);
+
+        // Find the skill in the hash table
+        int current_index = 1;
+        for (int i = 0; i < MAX_SKILLS; i++) {
+            HashNode* node = session->hash_skills->table[i];
+            while (node != NULL) {
+                if (current_index == skill_idx) {
+                    selected_skills[skill_count] = node->skill;
+                    printf("Selected Skill: %s\n", node->skill.name);
+                    skill_count++;
+                    node = NULL; // Break out of the inner loop
+                } else {
+                    node = node->next;
                 }
+                current_index++;
             }
         }
+        
     }
 
     // Initialize the player character
@@ -154,13 +153,7 @@ Character test_character(Session* session){
     printf(CYAN BOLD"\n1. Light Clothing:  500 HP, 80 ATK, 40 DEF, 80 VEL\n");
     printf(CYAN BOLD"\n2. Steel Armour:  500 HP, 60 ATK, 80 DEF, 50 VEL\n\n"RESET);
     int outfit;
-    printf(YELLOW BOLD"Enter a valid option: "RESET);
-    scanf("%d", &outfit);
-
-    while (outfit < 1 || outfit > 2) {
-        printf("Please enter a valid option: "RESET);
-        scanf("%d", &outfit);
-    }
+    outfit=input_integer("Enter a valid option: ",1,2);
 
     if(outfit == 1){
         player.hp=500;
@@ -227,27 +220,27 @@ void test_combat(Session* session) {
 
         
         while (1) {
-            printf("Select enemy: ");
-            scanf("%d", &enemy_idx);
+            enemy_idx=input_integer("Select enemy: ",1,MAX_ENEMIES);
             if(enemy_idx==0){
                 counter++;
                 break;
             }
-            else if (enemy_idx < 1 || enemy_idx > MAX_ENEMIES) {
-                while (getchar() != '\n'); // Clear the input buffer
-                printf("Invalid input. Please enter a number between 1 and %d.\n", MAX_ENEMIES);
-            } else {
+            else {
                 shouldBreak = 1;
                 break;
             }
         }
+
         if (shouldBreak==1) {
             break; // Break the outer loop if the flag is set
         }
+
     }
+
+
     
     Enemy selected_enemy = session->enemies[enemy_idx - 1];
-    printf("Selected Enemy: %s\n", selected_enemy.name);
+    printf("\nSelected Enemy: %s\n", selected_enemy.name);
 
     Character player = test_character(session);
 
@@ -271,15 +264,7 @@ void scenario_test(Session* session){
     }
     printf("%d) %s\n", i+1, test_scenario->name);
     int option = 0;
-    while (1) {
-        printf("Select scenario: ");
-        if (scanf("%d", &option) != 1 || option < 1 || option > MAX_SCENARIOS) {
-            while (getchar() != '\n'); // Clear the input buffer
-            printf("Invalid input. Please enter a number between 1 and %d.\n", MAX_SCENARIOS);
-        } else {
-            break;
-        }
-    }
+    option=input_integer("Select scenario: ",1,MAX_SCENARIOS);
 
     for(i = MAX_SCENARIOS-option; i>0; i--){
         test_scenario=test_scenario->Previous;
@@ -293,13 +278,12 @@ void test_menu(){
     Session test_session;
     int option=0;
     while(option!=4){
+    printf(RED UNDERLINE BOLD"\n    TESTSUIT MENU    \n\n"RESET);
     printf("1. Test JSON loads\n");
     printf("2. Test combat function\n");
     printf("3. Test scenario function\n");
     printf("4. EXIT\n");
-    printf("Enter a valid option: ");
-    scanf("%d",&option);
-        while((getchar()) != '\n');
+    option=input_integer("Enter a valid option: ",1,4);
         if(option==1){
             test_json(&test_session);
         }
